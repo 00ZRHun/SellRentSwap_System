@@ -290,7 +290,7 @@
 
 											<!-- Accessories -->
 												<!-- row 1 -->
-											<!-- <div class="form-group">
+											<div class="form-group">
 												<div class="col-sm-3">
 													<div class="checkbox checkbox-inline">
 													<input type="checkbox" id="airconditioner" name="airconditioner" value="1">
@@ -309,13 +309,15 @@
 													<label for="antilockbrakingsys"> AntiLock Braking System </label>
 													</div>
 												</div>
-												<div class="checkbox checkbox-inline">
-													<input type="checkbox" id="brakeassist" name="brakeassist" value="1">
-													<label for="brakeassist"> Brake Assist </label>
+												<div class="col-sm-3">
+													<div class="checkbox checkbox-inline">
+														<input type="checkbox" id="brakeassist" name="brakeassist" value="1">
+														<label for="brakeassist"> Brake Assist </label>
+													</div>
 												</div>
-											</div> -->
+											</div>
 												<!-- row 2 -->
-											<!-- <div class="form-group">
+											<div class="form-group">
 												<div class="col-sm-3">
 													<div class="checkbox checkbox-inline">
 														<input type="checkbox" id="powersteering" name="powersteering" value="1">
@@ -340,9 +342,9 @@
 														<label for="powerwindow"> Power Windows </label>
 													</div>
 												</div>
-											</div> -->
+											</div>
 												<!-- row 3 -->
-											<!-- <div class="form-group">
+											<div class="form-group">
 												<div class="col-sm-3">
 													<div class="checkbox checkbox-inline">
 														<input type="checkbox" id="cdplayer" name="cdplayer" value="1">
@@ -367,10 +369,13 @@
 														<label for="leatherseats"> Leather Seats </label>
 													</div>
 												</div>
-											</div> -->
+											</div>
+
+											<div class="hr-dashed"></div>
+											<br><br><br>
 
 											<!-- Cancel & Save btn -->
-											<div class="form-group">
+											<div class="form-group text-center">
 												<div class="col-sm-8 col-sm-offset-2">
 													<button class="btn btn-default" type="reset">Cancel</button>
 													<button class="btn btn-primary" name="submit" type="submit">Save changes</button>

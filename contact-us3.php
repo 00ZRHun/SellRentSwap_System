@@ -13,9 +13,19 @@
     $payPalBusinessAccount=$_POST['payPalBusinessAccount'];
     $contactNo=$_POST['contactNo'];
     $image=$_POST['image'];
+    //////////////////////////////////////////////////////////////////////////////////////////
+    move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
+    move_uploaded_file($_FILES["img2"]["tmp_name"],"img/itemImages/".$_FILES["img2"]["name"]);
+    move_uploaded_file($_FILES["img3"]["tmp_name"],"img/itemImages/".$_FILES["img3"]["name"]);
+    move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
+    move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
+    //////////////////////////////////////////////////////////////////////////////////////////
+    $sell=$_POST['sell'];
+    $rent=$_POST['rent'];
+    $swap=$_POST['swap'];
 
-    $sql="INSERT INTO tblpostitem(productName,overview,usedYear,pricePerDay,totalPrice,payPalBusinessAccount,contactNo,image) 
-    VALUES(:productName,:overview,:usedYear,:pricePerDay,:totalPrice,:payPalBusinessAccount,:contactNo,:image)";
+    $sql="INSERT INTO tblpostitem(productName,overview,usedYear,pricePerDay,totalPrice,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap) 
+    VALUES(:productName,:overview,:usedYear,:pricePerDay,:totalPrice,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
     // $sql="INSERT INTO tblpostitem(productName) VALUES(:productName)";
     
     $query = $dbh->prepare($sql);
@@ -27,6 +37,18 @@
     $query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
     $query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
     $query->bindParam(':image',$image,PDO::PARAM_STR);
+    //////////////////////////////////////////////////////////////////////////////////////////
+    $query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
+    $query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
+    $query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
+    $query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
+    $query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+    //////////////////////////////////////////////////////////////////////////////////////////
+    $query->bindParam(':sell',$sell,PDO::PARAM_STR);
+    $query->bindParam(':rent',$rent,PDO::PARAM_STR);
+    $query->bindParam(':swap',$swap,PDO::PARAM_STR);
+    
+
     $query->execute();
     $lastInsertId = $dbh->lastInsertId();
     
@@ -197,34 +219,97 @@
                   <label class="control-label">Contact Number<span>*</span></label>
                   <input type="text" name="contactNo" class="form-control white_bg" id="contactNo" required>
                 </div>
-                <div class="form-group">
+
+                <!-- <div class="form-group">
                   <label class="control-label">Image <span>*</span></label>
                   <textarea class="form-control white_bg" name="image" id="image" rows="4" required></textarea>
-                </div>
+                </div> -->
+                <div class="hr-dashed"></div>
+                <!-- image -->
+                  <!-- row 1( subtitle ) -->
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <h4><b>Upload Images</b></h4>
+                    </div>
+                  </div>
+                  <!-- row 2( upload image ) -->
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                      Image 1
+                      <span style="color:red">*</span>
+                      <input type="file" name="img1" required>
+                    </div>
+                    <div class="col-sm-4">
+                      Image 2
+                      <input type="file" name="img2">
+                    </div>
+                    <div class="col-sm-4">
+                      Image 3
+                      <input type="file" name="img3">
+                    </div>
+                  </div>
+                  <!-- row 3( upload image ) -->
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                      Image 4
+                      <input type="file" name="img4">
+                    </div>
+                    <div class="col-sm-4">
+                      Image 5
+                      <input type="file" name="img5">
+                    </div>
+                  </div>
 
+                <div class="hr-dashed"></div>
                 <!--  -->
-                <div class="form-group">
-                  <div class="col-sm-4">
-                    <div class="checkbox checkbox-inline">
-                      <input type="checkbox" id="sell" name="sell" value="1">
-                      <label for="sell">Sell</label>
+
+                <!-- form 2( accessories ) -->
+                <!-- <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Category</div>
+                        <div class="panel-body"> -->
+
+                          <!-- Accessories -->
+                          <!-- row 1 -->
+                          <div class="form-group">
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="sell" name="sell" value="1">
+                                <label for="sell">Sell</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="rent" name="rent" value="1">
+                                <label for="rent">Rent</label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="swap" name="swap" value="1">
+                                <label for="swap">Swap</label>
+                              </div>
+                            </div>
+                          </div>                          
+
+                          <!-- Cancel & Save btn -->
+                         <!--  <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                              <button class="btn btn-default" type="reset">Cancel</button>
+                              <button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+                            </div>
+                          </div> -->
+                          
+                          <!-- form end -->
+                          </form>
+
+                      <!-- </div>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="checkbox checkbox-inline">
-                      <input type="checkbox" id="rent" name="rent" value="1">
-                      <label for="rent">Rent</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="checkbox checkbox-inline">
-                      <input type="checkbox" id="swap" name="swap" value="1">
-                      <label for="swap">Swap</label>
-                    </div>
-                  </div>
-                </div>          
+                </div>
+ -->
                 <!--  -->
-                
                 <div class="form-group">
                   <button class="btn" type="submit" name="send" type="submit">Submit<span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
                 </div>

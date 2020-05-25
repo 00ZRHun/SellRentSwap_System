@@ -17,13 +17,17 @@ DROP TABLE tblpostitem;
 CREATE TABLE IF NOT EXISTS `tblpostitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(100),
-  `overview` longtext,
   `usedYear` int(4),
+  `overview` longtext,
   `pricePerDay` int(12),
   `totalPrice` int(12),
   `payPalBusinessAccount` varchar(100),
   `contactNo` int(15),
-  `image` varchar(120),
+  `Vimage1` varchar(120) DEFAULT NULL,
+  `Vimage2` varchar(120) DEFAULT NULL,
+  `Vimage3` varchar(120) DEFAULT NULL,
+  `Vimage4` varchar(120) DEFAULT NULL,
+  `Vimage5` varchar(120) DEFAULT NULL,
   `sell` int(11) DEFAULT NULL,
   `rent` int(11) DEFAULT NULL,
   `swap` int(11) DEFAULT NULL,
@@ -31,6 +35,25 @@ CREATE TABLE IF NOT EXISTS `tblpostitem` (
   `delmode` varchar(100),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+/* CREATE TABLE IF NOT EXISTS `tblpostitem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100),
+  `overview` longtext,
+  `usedYear` int(4),
+  `pricePerDay` int(12),
+  `totalPrice` int(12),
+  `payPalBusinessAccount` varchar(100),
+  `contactNo` int(15),
+  `image` varchar(120) NOT NULL,
+  `sell` int(11) DEFAULT NULL,
+  `rent` int(11) DEFAULT NULL,
+  `swap` int(11) DEFAULT NULL,
+  `updationDate` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `delmode` varchar(100),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ; */
+
 /* CREATE TABLE IF NOT EXISTS `tblpostitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(100),
@@ -51,6 +74,14 @@ VALUES
 
 -- 
 
-    $productName . $overview . $usedYear . $pricePerDay . $totalPrice . $payPalBusinessAccount . $contactNo . $image
+$productName . $overview . $usedYear . $pricePerDay . $totalPrice . $payPalBusinessAccount . $contactNo . $image
 
-    "w",2,2,"w","w"
+"w",2,2,"w","w"
+
+-- 
+
+sell
+rent
+swap
+
+sell,rent,swap

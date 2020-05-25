@@ -87,10 +87,14 @@
 <!-- /Header --> 
 
 <!--Listing-Image-Slider-->
-
+  <!-- get data from tblpostitem -->
 <?php 
   $vhid=intval($_GET['vhid']);
-  $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid  from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblvehicles.id=:vhid";
+  /* $sql = "SELECT tblvehicles.*,tblbrands.BrandName,tblbrands.id as bid
+   from tblvehicles join tblbrands
+   on tblbrands.id=tblvehicles.VehiclesBrand
+   where tblvehicles.id=:vhid"; */
+  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=1";
   $query = $dbh -> prepare($sql);
   $query->bindParam(':vhid',$vhid, PDO::PARAM_STR);
   $query->execute();
@@ -104,17 +108,26 @@
 ?>  
 
 <section id="listing_img_slider">
-  <div><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage2);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage3);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <div><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage4);?>" class="img-responsive"  alt="image" width="900" height="560"></div>
-  <?php if($result->Vimage5=="")
-{
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage2);?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage3);?>" class="img-responsive" alt="image" width="900" height="560"></div>
+  <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage4);?>" class="img-responsive"  alt="image" width="900" height="560"></div>
+  
+  <?php
+   if($result->Vimage5=="")
+    {
 
-} else {
+    } else {
   ?>
-  <div><img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage5);?>" class="img-responsive" alt="image" width="900" height="560"></div>
-  <?php } ?>
+
+    <div>
+      <img src="img/vehicleimages/<?php echo htmlentities($result->Vimage5);?>" class="img-responsive" alt="image" width="900" height="560">
+    </div>
+  
+  <?php
+   } 
+  ?>
+
 </section>
 <!--/Listing-Image-Slider-->
 
@@ -128,13 +141,13 @@
       <!-- col 1( name, title ) -->
       <div class="col-md-9">
         <h2>
-          <?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?>
+          <!-- <?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?> -->
         </h2>
       </div>
       <!-- col 2( price ) -->
       <div class="col-md-3">
         <div class="price_info">
-          <p>$<?php echo htmlentities($result->PricePerDay);?> </p>Per Day
+          <!-- <p>$<?php echo htmlentities($result->PricePerDay);?> </p>Per Day -->
         </div>
       </div>
     </div>
@@ -143,7 +156,7 @@
     <div class="row">
       <div class="col-md-9">
         <!-- main feature -->
-        <div class="main_features">
+        <!-- <div class="main_features">
           <ul>
             <li>
               <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -161,7 +174,7 @@
               <p>Seats</p>
             </li>
           </ul>
-        </div>
+        </div> -->
 
         <!-- tabs( overview, accessories) -->
         <div class="listing_more_info">
@@ -169,16 +182,22 @@
           <!-- 1) -->
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
-              <!-- vehicle-overview -->
-              <li role="presentation" class="active">
-                <a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">
-                  Vehicle Overview 
+              <!-- Sell -->
+              <li role="presentation" class="active col-md-4">
+                <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
+                  Sell
                 </a>
               </li>
-              <!-- Accessories -->
-              <li role="presentation">
-                <a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">
-                  Accessories
+              <!-- Rent -->
+              <li role="presentation" class="col-md-4">
+                <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
+                  Rent
+                </a>
+              </li>
+              <!-- Swap -->
+              <li role="presentation" class="col-md-4">
+                <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
+                  Swap
                 </a>
               </li>
             </ul>
@@ -186,12 +205,66 @@
           <!-- 2) -->
             <!-- Tab panes -->
             <div class="tab-content"> 
-              <!-- vehicle-overview -->
-              <div role="tabpanel" class="tab-pane active" id="vehicle-overview">
+              <!-- Sell -->
+             <div role="tabpanel" class="tab-pane active" id="sell">
                 <p>
-                  <?php echo htmlentities($result->VehiclesOverview);?>
+                  <!-- Sell
+                  <?php echo htmlentities($result->overview);?> -->
+                  <!--  -->
+                  <!-- payment( PayPal ) -->
+                  <div id="payment-box">
+                          <!-- <img src="images/camera.jpg" /> -->
+                          <h4 class="txt-title">
+                            Product Name : 
+                            <?php echo htmlentities($result->productName);?>
+                          </h4>
+                          <div class="txt-price">
+                            Total Price : 
+                            RM<?php echo htmlentities($result->totalPrice);?>
+                          </div>
+                          <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                              method="post" target="_top">
+                              <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
+                              <input type='hidden' name='item_name' value='<?php echo htmlentities($result->productName);?>'>
+                              <input type='hidden' name='item_number' value='CAM#N1'> 
+                              <input type='hidden' name='amount' value='<?php echo htmlentities($result->totalPrice);?>'>
+                              <input type='hidden' name='no_shipping' value='1'> 
+                              <input type='hidden' name='currency_code' value='MYR'> 
+                              <input type='hidden' name='notify_url'
+                                  value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
+                              <input type='hidden' name='cancel_return'
+                                  value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
+                              <input type='hidden' name='return'
+                                  value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
+                              <input type="hidden" name="cmd" value="_xclick">
+
+                              <input
+                                  type="submit" name="pay_now" id="pay_now"
+                                  Value="Pay Now"
+                              >
+                          </form>
+                  </div>
+                  <!--  -->
                 </p>
               </div>
+
+              <!-- Rent -->
+              <div role="tabpanel" class="tab-pane" id="rent">
+                <p>
+                  Rent
+                  <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                </p>
+              </div>
+
+              <!-- Swap -->
+              <div role="tabpanel" class="tab-pane" id="swap">
+                <p>
+                  Swap
+                  <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                </p>
+              </div>
+
+              <!--  -->
               
               <!-- Accessories -->
               <div role="tabpanel" class="tab-pane" id="accessories"> 
@@ -486,9 +559,15 @@
       <div class="row">
         <?php 
           $bid=$_SESSION['brndid'];
-          $sql="SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1
+          /* $sql="SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1
                 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand
-                where tblvehicles.VehiclesBrand=:bid";
+                where tblvehicles.VehiclesBrand=:bid"; */
+      // ????( filter )
+          /* $sql="SELECT *
+                from tblpostitem
+                where tblvehicles.VehiclesBrand=:bid"; */
+          $sql="SELECT * from tblpostitem";
+          
           $query = $dbh -> prepare($sql);
           $query->bindParam(':bid',$bid, PDO::PARAM_STR);
           $query->execute();
@@ -503,8 +582,8 @@
             <div class="product-listing-m gray-bg">
               <!-- row 1( pic. ) -->
               <div class="product-listing-img">
-                <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                  <img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" />
+                <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
+                  <img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" />
                 </a>
               </div>
 
@@ -512,19 +591,20 @@
               <div class="product-listing-content">
                 <!-- row 1 -->
                 <h5>
-                  <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                    <?php echo htmlentities($result->BrandName);?>
-                     , <?php echo htmlentities($result->VehiclesTitle);?>
+                  <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
+                    <?php echo htmlentities($result->productName);?>
+                     , <?php echo htmlentities($result->usedYear);?> Years Used.
                   </a>
                 </h5>
 
                 <!-- row 2( price ) -->
                 <p class="list-price">
-                  $<?php echo htmlentities($result->PricePerDay);?>
+                  <?php echo htmlentities(substr($result->overview,0,70));?>
+                  
                 </p>
             
                 <!-- row 3( seat, model, fuel ) -->
-                <ul class="features_list">
+                <!-- <ul class="features_list">
                   <li>
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <?php echo htmlentities($result->SeatingCapacity);?>
@@ -538,6 +618,62 @@
                   <li>
                     <i class="fa fa-car" aria-hidden="true"></i>
                     <?php echo htmlentities($result->FuelType);?>
+                  </li>
+                </ul> -->
+                <ul class="features_list">
+                  <li>
+                    <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+                    <b>Sell : </b>
+                    <?php
+                      if($result->sell == 1)
+                      {
+                    ?>
+                      RM<?php echo htmlentities($result->totalPrice);?>
+                    <?php
+                      }
+                      else
+                      {
+                    ?>
+                      -
+                    <?php
+                      }
+                    ?>
+                  </li>
+                  <li>
+                    <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
+                    <b>Rent : </b>  
+                    <?php
+                      if($result->rent == 1)
+                      {
+                    ?>
+                      RM<?php echo htmlentities($result->pricePerDay);?>
+                    <?php
+                      }
+                      else
+                      {
+                    ?>
+                      -
+                    <?php
+                      }
+                    ?>
+                  </li>
+                  <li>
+                    <!-- <i class="fa fa-car" aria-hidden="true"></i> -->
+                    <b>Swap : </b>  
+                    <?php
+                      if($result->swap == 1)
+                      {
+                    ?>
+                      RM<?php echo htmlentities($result->value);?>
+                    <?php
+                      }
+                      else
+                      {
+                    ?>
+                      -
+                    <?php
+                      }
+                    ?>
                   </li>
                 </ul>
               </div>
@@ -585,34 +721,6 @@
 <script src="assets/js/bootstrap-slider.min.js"></script> 
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
-
-<!-- payment( PayPal ) -->
-<div id="payment-box">
-        <img src="images/camera.jpg" />
-        <h4 class="txt-title">A6900 MirrorLess Camera</h4>
-        <div class="txt-price">$289.61</div>
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-            method="post" target="_top">
-            <input type='hidden' name='business' value='jobbusiness@gmail.com'> 
-            <input type='hidden' name='item_name' value='Camera'> 
-            <input type='hidden' name='item_number' value='CAM#N1'> 
-            <input type='hidden' name='amount' value='10'> 
-            <input type='hidden' name='no_shipping' value='1'> 
-            <input type='hidden' name='currency_code' value='USD'> 
-            <input type='hidden' name='notify_url'
-                value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
-            <input type='hidden' name='cancel_return'
-                value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
-            <input type='hidden' name='return'
-                value='http://localhost:8888/paypal-payment-gateway-integration-in-php/return.php'>
-            <input type="hidden" name="cmd" value="_xclick">
-
-            <input
-                type="submit" name="pay_now" id="pay_now"
-                Value="Pay Now"
-            >
-        </form>
-</div>
 
 </body>
 </html>

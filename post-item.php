@@ -14,8 +14,9 @@
 			$productName=$_POST['productName'];
 			$usedYear=$_POST['usedYear'];
 			$overview=$_POST['overview'];
-			$pricePerDay=$_POST['pricePerDay'];
 			$totalPrice=$_POST['totalPrice'];
+			$pricePerDay=$_POST['pricePerDay'];
+			$value=$_POST['value'];
 			$payPalBusinessAccount=$_POST['payPalBusinessAccount'];
 			$contactNo=$_POST['contactNo'];
 			$vimage1=$_FILES["img1"]["name"];
@@ -32,14 +33,15 @@
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
 			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
 
-			$sql="INSERT INTO tblpostitem(productName,usedYear,overview,pricePerDay,totalPrice,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
-			 VALUES(:productName,:usedYear,:overview,:pricePerDay,:totalPrice,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
+			$sql="INSERT INTO tblpostitem(productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
+			 VALUES(:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
 			$query = $dbh->prepare($sql);
 			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
 			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
 			$query->bindParam(':overview',$overview,PDO::PARAM_STR);
-			$query->bindParam(':pricePerDay',$pricePerDay,PDO::PARAM_STR);
 			$query->bindParam(':totalPrice',$totalPrice,PDO::PARAM_STR);
+			$query->bindParam(':pricePerDay',$pricePerDay,PDO::PARAM_STR);
+			$query->bindParam(':value',$value,PDO::PARAM_STR);
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
 			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
@@ -260,14 +262,19 @@
 													</div>
 													<!-- row 3 -->
 													<div class="form-group">
+														<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
+														<div class="col-sm-2">
+															<input type="number" name="totalPrice" id="totalPrice" class="form-control" required>
+														</div>
+
 														<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
-														<div class="col-sm-4">
+														<div class="col-sm-2">
 															<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" required>
 														</div>
 
-														<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<input type="number" name="totalPrice" id="totalPrice" class="form-control" required>
+														<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
+														<div class="col-sm-2">
+															<input type="number" name="value" id="value" class="form-control" required>
 														</div>
 
 														<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>

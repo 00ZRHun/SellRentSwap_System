@@ -136,10 +136,10 @@
 
 <!--Contact-us-->
 <div class="ts-main-content section-padding">
-		<div class="container">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
 
       <!-- partition 1( left ) -->
           <h3>Get in touch using the form below</h3>
@@ -232,12 +232,14 @@
             </div>
 
 
-          </div>
-				</div>
-			</div>
-		</div>
-	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- /Contact-us--> 
+
+<!-- form 2 -->
 
 
 <!--Footer -->

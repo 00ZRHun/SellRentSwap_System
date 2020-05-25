@@ -72,11 +72,9 @@
 <!-- /Banners --> 
 
 
-<!-- Body -->
-  <!-- Resent Cat-->
+<!-- Resent Cat-->
 <section class="section-padding gray-bg">
   <div class="container">
-    <!-- row 1( descritption ) -->
     <div class="section-header text-center">
       <h2>Find the Best <span>CarForYou</span></h2>
       <p>
@@ -85,8 +83,7 @@
     </div>
     
     <div class="row"> 
-      <!-- row 2( new car btn ) -->
-        <!-- Nav tabs -->
+      <!-- Nav tabs -->
       <div class="recent-tab">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
@@ -97,14 +94,12 @@
         </ul>
       </div>
 
-      <!-- row 3( car list ) -->
-        <!-- Recently Listed New Cars -->
+      <!-- Recently Listed New Cars -->
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="resentnewcar">
 
           <?php 
-            // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-            $sql = "SELECT * from tblpostitem";
+            $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
             $query = $dbh -> prepare($sql);
             $query->execute();
             $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -119,17 +114,16 @@
             <div class="recent-car-list">
               <div class="car-info-box">
                 <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                  <img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
+                  <img src="admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
                 </a>
-                
-                <!-- <ul>
+                <ul>
                   <li>
                     <i class="fa fa-car" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->productName);?>
+                    <?php echo htmlentities($result->FuelType);?>
                   </li>
                   <li>
                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <?php echo htmlentities($result->usedYear);?>
+                    <?php echo htmlentities($result->ModelYear);?>
                     Model
                   </li>
                   <li>
@@ -137,43 +131,25 @@
                     <?php echo htmlentities($result->SeatingCapacity);?>
                     seats
                   </li>
-                </ul> -->
-                <ul>
-                  <li>
-                    <!-- <i class="fa fa-car" aria-hidden="true"></i> -->
-                    Sell : RM
-                    <?php echo htmlentities($result->totalPrice);?>
-                  </li>
-                  <li>
-                    <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
-                    Rent : RM
-                    <?php echo htmlentities($result->pricePerDay);?>
-                  </li>
-                  <li>
-                    <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
-                    Swap : RM
-                    <?php echo htmlentities($result->value);?>
-                  </li>
                 </ul>
               </div>
 
               <div class="car-title-m">
                 <h6>
                   <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                    <?php echo htmlentities($result->productName);?>
-                     <!-- , <?php echo htmlentities($result->VehiclesTitle);?> -->
+                    <?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?>
                   </a>
                 </h6>
                 
                 <span class="price">
-                  <?php echo htmlentities($result->usedYear);?> Year Used
+                  $<?php echo htmlentities($result->PricePerDay);?> /Day
                 </span> 
               </div>
 
               <div class="inventory_info_m">
                 <p>
                   <?php 
-                    echo substr($result->overview,0,70);
+                    echo substr($result->VehiclesOverview,0,70);
                   ?>
                 </p>
               </div>
@@ -189,9 +165,7 @@
     </div>
   </div>
 </section>
-  <!-- /Resent Cat --> 
-<!-- /Body -->
-
+<!-- /Resent Cat --> 
 
 <!-- Fun Facts-->
 <section class="fun-facts-section">

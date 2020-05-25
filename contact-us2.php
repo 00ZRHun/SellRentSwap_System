@@ -1,32 +1,46 @@
 <?php
-session_start();
-error_reporting(0);
-include('includes/config.php');
+  session_start();
+  error_reporting(0);
+  include('includes/config.php');
 
-if(isset($_POST['send']))
-{
-  $name=$_POST['fullname'];
-  $email=$_POST['email'];
-  $contactno=$_POST['contactno'];
-  $message=$_POST['message'];
-  $sql="INSERT INTO  tblcontactusquery(name,EmailId,ContactNumber,Message) VALUES(:name,:email,:contactno,:message)";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':name',$name,PDO::PARAM_STR);
-  $query->bindParam(':email',$email,PDO::PARAM_STR);
-  $query->bindParam(':contactno',$contactno,PDO::PARAM_STR);
-  $query->bindParam(':message',$message,PDO::PARAM_STR);
-  $query->execute();
-  $lastInsertId = $dbh->lastInsertId();
-  
-  if($lastInsertId)
+  if(isset($_POST['send']))
   {
-    $msg="Query Sent. We will contact you shortly";
+    $productName=$_POST['productName'];
+    $overview=$_POST['overview'];
+    $usedYear=$_POST['usedYear'];
+    $pricePerDay=$_POST['pricePerDay'];
+    $totalPrice=$_POST['totalPrice'];
+    $payPalBusinessAccount=$_POST['payPalBusinessAccount'];
+    $contactNo=$_POST['contactNo'];
+    $image=$_POST['image'];
+
+    $sql="INSERT INTO tblpostitem(productName,overview,usedYear,pricePerDay,totalPrice,payPalBusinessAccount,contactNo,image) 
+    VALUES(:productName,:overview,:usedYear,:pricePerDay,:totalPrice,:payPalBusinessAccount,:contactNo,:image)";
+    // $sql="INSERT INTO tblpostitem(productName) VALUES(:productName)";
+    
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':productName',$productName,PDO::PARAM_STR);
+    $query->bindParam(':overview',$overview,PDO::PARAM_STR);
+    $query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
+    $query->bindParam(':pricePerDay',$pricePerDay,PDO::PARAM_STR);
+    $query->bindParam(':totalPrice',$totalPrice,PDO::PARAM_STR);
+    $query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
+    $query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
+    $query->bindParam(':image',$image,PDO::PARAM_STR);
+    $query->execute();
+    $lastInsertId = $dbh->lastInsertId();
+    
+    if($lastInsertId)
+    {
+      // $msg="Query Sent. We will contact you shortly";
+      $msg="Item Posted.";
+    }
+    else 
+    {
+      $error="Something went wrong. Please try again " . $productName . $overview . $usedYear . $pricePerDay . $totalPrice . $payPalBusinessAccount . $contactNo . $image . "\n" .$sql;
+
+    }
   }
-  else 
-  {
-    $error="Something went wrong. Please try again";
-  }
-}
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -53,19 +67,19 @@ if(isset($_POST['send']))
 
   <!-- SWITCHER -->
   <link rel="stylesheet" id="switcher-css" type="text/css" href="assets/switcher/css/switcher.css" media="all" />
-  <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
-  <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/orange.css" title="orange" media="all" />
-  <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/blue.css" title="blue" media="all" />
-  <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/pink.css" title="pink" media="all" />
-  <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/green.css" title="green" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
+    <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/orange.css" title="orange" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/blue.css" title="blue" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/pink.css" title="pink" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/green.css" title="green" media="all" />
   <link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/purple.css" title="purple" media="all" />
           
   <!-- Fav and touch icons -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.html">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
-  <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.html">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
   <style>
@@ -149,25 +163,99 @@ if(isset($_POST['send']))
 
             <div class="contact_form gray-bg">
               <!-- form -->
-              <form  method="post">
+              <form method="post">
                 <div class="form-group">
-                  <label class="control-label">Name<span>*</span></label>
-                  <input type="text" name="name" class="form-control white_bg" id="Name" required>
+                  <label class="control-label">Product Name<span>*</span></label>
+                  <input type="text" class="form-control white_bg" id="productName" name="productName" required>
                 </div>
+
+                <!--  -->
                 <div class="form-group">
                   <label class="control-label">Overview<span>*</span></label>
-                  <input type="text" name="overview" class="form-control white_bg" id="overview" required>
+                  <textarea class="form-control white_bg" name="overview" id="overview" rows="4" required></textarea>
+                  <!-- <input type="text" name="overview" class="form-control white_bg" id="overview" required> -->
                 </div>
                 <div class="form-group">
                   <label class="control-label">Used Year<span>*</span></label>
-                  <input type="text" name="contactno" class="form-control white_bg" id="phonenumber" required>
+                  <input type="text" name="usedYear" class="form-control white_bg" id="usedYear" required>
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Message <span>*</span></label>
-                  <textarea class="form-control white_bg" name="message" rows="4" required></textarea>
+                  <label class="control-label">Price per Day <span>*</span></label>
+                  <textarea class="form-control white_bg" name="pricePerDay" id="pricePerDay" rows="4" required></textarea>
+                </div>
+                <!--  -->
+                <div class="form-group">
+                  <label class="control-label">Total Price<span>*</span></label>
+                  <input type="text" name="totalPrice" class="form-control white_bg" id="totalPrice" required>
                 </div>
                 <div class="form-group">
-                  <button class="btn" type="submit" name="send" type="submit">Send Message <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                  <label class="control-label">Pay Pal Business Account<span>*</span></label>
+                  <textarea class="form-control white_bg" name="payPalBusinessAccount" id="payPalBusinessAccount" rows="4" required></textarea>
+                  <!-- <input type="text" name="overview" class="form-control white_bg" id="overview" required> -->
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Contact Number<span>*</span></label>
+                  <input type="text" name="contactNo" class="form-control white_bg" id="contactNo" required>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Image <span>*</span></label>
+                  <textarea class="form-control white_bg" name="image" id="image" rows="4" required></textarea>
+                </div>
+                <!--  -->
+
+                <!-- form 2( accessories ) -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Accessories</div>
+                        <div class="panel-body">
+
+                          <!-- Accessories -->
+                          <!-- row 1 -->
+                          <div class="form-group">
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                              <input type="checkbox" id="airconditioner" name="airconditioner" value="1">
+                              <label for="airconditioner"> Air Conditioner </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                              <input type="checkbox" id="powerdoorlocks" name="powerdoorlocks" value="1">
+                              <label for="powerdoorlocks"> Power Door Locks </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                              <input type="checkbox" id="antilockbrakingsys" name="antilockbrakingsys" value="1">
+                              <label for="antilockbrakingsys"> AntiLock Braking System </label>
+                              </div>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                              <input type="checkbox" id="brakeassist" name="brakeassist" value="1">
+                              <label for="brakeassist"> Brake Assist </label>
+                            </div>
+                          </div>                          
+
+                          <!-- Cancel & Save btn -->
+                          <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                              <button class="btn btn-default" type="reset">Cancel</button>
+                              <button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+                            </div>
+                          </div>
+                          
+                          <!-- form end -->
+                          </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--  -->
+                <div class="form-group">
+                  <button class="btn" type="submit" name="send" type="submit">Submit<span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
                 </div>
               </form>
             </div>

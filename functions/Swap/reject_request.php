@@ -20,7 +20,7 @@
             WHERE provider_id=:provider_id AND id=:swap_request_id";    
 
     $request_sql = "SELECT * FROM swap_requests WHERE id=:swap_request_id";
-    $insert_record_sql = "INSERT INTO swap_records(item_id, receiver_id, provider_id, receiver_item_id, status) VALUES (:item_id, :receiver_id, :provider_id, :receiver_item_id, :status)";
+    $insert_record_sql = "INSERT INTO swap_records(user_id, item_id, receiver_id, provider_id, receiver_item_id, status) VALUES (:user_id, :item_id, :receiver_id, :provider_id, :receiver_item_id, :status)";
 
     try {
         // Update swap_request table
@@ -39,6 +39,7 @@
         // Added to swap_records table
         $newquery = $dbh->prepare($insert_record_sql);
         $newquery->bindParam(':receiver_item_id', intval($row_result["item_id"]), PDO::PARAM_INT);
+        $newquery->bindParam(':user_id', $user_id);
         $newquery->bindParam(':receiver_id', intval($row_result["receiver_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':provider_id', intval($row_result["provider_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':item_id', intval($row_result["receiver_item_id"]), PDO::PARAM_INT);

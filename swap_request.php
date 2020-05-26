@@ -73,10 +73,10 @@ $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
                 FROM swap_requests as sr 
                 JOIN tblpostitem as item
                 ON item.id = sr.item_id
-                WHERE sr.provider_id=:provider_id AND sr.status = 0";
+                WHERE sr.user_id=:user_id OR sr.provider_id=:user_id AND sr.status = 0";
 
 $query = $dbh->prepare( $sql );
-$query->bindParam( ':provider_id', $user_id, PDO::PARAM_STR );
+$query->bindParam( ':user_id', $user_id, PDO::PARAM_STR );
 $query->execute();
 $results = $query->fetchAll( PDO::FETCH_OBJ );
 if ( $query->rowCount() > 0 ) {
@@ -97,11 +97,23 @@ if ( $query->rowCount() > 0 ) {
         foreach ( $receiverResults as $rResult ) {
             ?>
             <div id = 'swap_request_div' style = 'margin: 1em; background: #346BE0; color: white; padding: 2em; border-radius: 15px;'>
-                <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap your <?php echo htmlentities($result->itemName)  ?> with his <?php echo htmlentities($rResult->receiverItemName)  ?></p>
+                <!-- If is provider checking request -->
+                <?php if($result->provider_id == $user_id) {?>
+                <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
                 <a style = 'color: #fff' href = 'item-details.php?vhid=<?php echo htmlentities($rResult->receiverItemID) ?>'>View</a>
                 <a id="accept-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Accept</a>
                 <a id="reject-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Reject</a>
+                <?php } else {?>
+                <!-- If is receiver checking request -->
+                <p>You want to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
+                <strong>
+                <?php if($result->status == -1) echo "Swap request rejected." ?>
+                <?php if($result->status == 1) echo "Swap request accepted" ?>
+                <?php if($result->status == 0) echo "Pending" ?>
+                </strong>
+                <?php } ?>
             </div>
+            
             <?php
         }
         ?>        

@@ -73,10 +73,10 @@ $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
                 FROM swap_records as sr 
                 JOIN tblpostitem as item
                 ON item.id = sr.item_id
-                WHERE sr.provider_id=:provider_id";
+                WHERE sr.receiver_id=:user_id OR sr.user_id=:user_id";
 
 $query = $dbh->prepare( $sql );
-$query->bindParam( ':provider_id', $user_id, PDO::PARAM_STR );
+$query->bindParam( ':user_id', $user_id, PDO::PARAM_STR );
 $query->execute();
 $results = $query->fetchAll( PDO::FETCH_OBJ );
 if ( $query->rowCount() > 0 ) {
@@ -98,10 +98,16 @@ if ( $query->rowCount() > 0 ) {
             ?>
             <div id = 'swap_request_div' style = 'margin: 1em; background: #346BE0; color: white; padding: 2em; border-radius: 15px;'>
                 <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap your <?php echo htmlentities($result->itemName) ?> with his <?php echo htmlentities($rResult->receiverItemName) ?></p>
+                <!-- If is buyer checking records -->
+                <?php if($result->provider_id == $user_id) {?>
                 <strong style="opacity: .75">
                     <?php if($result->status == -1) echo "You rejected this swap request." ?>
                     <?php if($result->status == 1) echo "You accepted this swap request" ?>
                 </strong>
+                <?php } else {?>
+                    <?php if($result->status == -1) echo "Your swap request is rejected." ?>
+                    <?php if($result->status == 1) echo "Your swap request is accepted." ?>
+                <?php } ?>
             </div>
             <?php
         }

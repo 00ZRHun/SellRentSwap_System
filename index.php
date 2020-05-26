@@ -84,23 +84,29 @@
       </p>
     </div>
     
-    <div class="row"> 
+    <div class="row">    
       <!-- row 2( new car btn ) -->
         <!-- Nav tabs -->
-      <div class="recent-tab">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#resentnewcar" role="tab" data-toggle="tab">
-              New Car
-            </a>
-          </li>
-        </ul>
-      </div>
+      <!-- <a href="#resentnewcar"> -->
+        <div class="recent-tab">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <!-- data-toggle="tab"/"modal" -->
+              <!-- <a href="#resentnewcar" role="tab" data-toggle="tab" data-dismiss="tab"> -->
+              <!-- <a href="#resentnewcar" role="tab" data-toggle="tab"> -->
+              <a href="#resentnewcar" role="tab" style="cursor:pointer;">
+                New Car
+              </a>
+            </li>
+          </ul>
+        </div>
+      <!-- </a> -->
 
       <!-- row 3( car list ) -->
         <!-- Recently Listed New Cars -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="resentnewcar">
+        <!-- <div role="tabpanel" class="tab-pane active" id="resentnewcar"> -->
+        <div id="resentnewcar">
 
           <?php 
             // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
@@ -118,7 +124,7 @@
           <div class="col-list-3">
             <div class="recent-car-list">
               <div class="car-info-box">
-                <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
+                <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
                   <img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
                 </a>
                 
@@ -141,27 +147,75 @@
                 <ul>
                   <li>
                     <!-- <i class="fa fa-car" aria-hidden="true"></i> -->
-                    Sell : RM
-                    <?php echo htmlentities($result->totalPrice);?>
+                    Sell : 
+                    <?php 
+                      if($result->sell == 1)
+                      { 
+                    ?>
+                      RM
+                    <?php 
+                        echo htmlentities($result->totalPrice);
+                      }
+                      else
+                      {
+                    ?>
+                      N/A
+                    <?php
+                      }
+                    ?>
                   </li>
+                  
                   <li>
                     <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
-                    Rent : RM
-                    <?php echo htmlentities($result->pricePerDay);?>
+                    Rent : 
+                    <!--  -->
+                    <?php 
+                      if($result->rent == 1)
+                      { 
+                    ?>
+                      RM
+                    <?php 
+                        echo htmlentities($result->pricePerDay);
+                      }
+                      else
+                      {
+                    ?>
+                      N/A
+                    <?php
+                      }
+                    ?>
+                    <!--  -->
                   </li>
+
                   <li>
                     <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
-                    Swap : RM
-                    <?php echo htmlentities($result->value);?>
+                    Swap : 
+                    <!--  -->
+                    <?php 
+                      if($result->swap == 1)
+                      { 
+                    ?>
+                      RM
+                    <?php 
+                        echo htmlentities($result->value);
+                      }
+                      else
+                      {
+                    ?>
+                      N/A
+                    <?php
+                      }
+                    ?>
+                    <!--  -->
                   </li>
                 </ul>
               </div>
 
               <div class="car-title-m">
                 <h6>
-                  <a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>">
+                  <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
+                    <!-- , <?php echo htmlentities($result->VehiclesTitle);?> -->
                     <?php echo htmlentities($result->productName);?>
-                     <!-- , <?php echo htmlentities($result->VehiclesTitle);?> -->
                   </a>
                 </h6>
                 

@@ -100,7 +100,9 @@
                   <li><a href="my-booking.php">My Booking</a></li>
                   <li><a href="post-testimonial.php">Post a Testimonial</a></li>
                   <li><a href="my-testimonials.php">My Testimonial</a></li>
-                  <li><a href="logout.php">Sign Out</a></li>
+                  <li><a href="swap_request.php">Requests</a></li>
+                  <li><a href="swap_records-listing.php">Records</a></li>                  
+                  <li><a href="logout.php">Sign Out</a></li>                  
                 <?php } else { ?>
                   <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
                   <!-- <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Profile Settings</a></li>

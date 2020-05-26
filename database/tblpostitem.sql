@@ -33,7 +33,7 @@ CREATE TABLE `tblpostitem` (
   `pricePerDay` int(12) DEFAULT NULL,
   `value` int(12) NOT NULL,
   `payPalBusinessAccount` varchar(100) DEFAULT NULL,
-  `contactNo` int(15) DEFAULT NULL,
+  `contactNo` varchar(15) DEFAULT NULL,
   `Vimage1` varchar(120) DEFAULT NULL,
   `Vimage2` varchar(120) DEFAULT NULL,
   `Vimage3` varchar(120) DEFAULT NULL,

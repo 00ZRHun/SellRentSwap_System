@@ -12,6 +12,7 @@
 	{ 
 		if(isset($_POST['submit']))
 		{
+			$userId=$_POST['userId'];
 			$productName=$_POST['productName'];
 			$usedYear=$_POST['usedYear'];
 			$overview=$_POST['overview'];
@@ -34,9 +35,10 @@
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
 			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
 
-			$sql="INSERT INTO tblpostitem(productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
-			 VALUES(:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
+			$sql="INSERT INTO tblpostitem(userId, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
+			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
 			$query = $dbh->prepare($sql);
+			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
 			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
 			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
 			$query->bindParam(':overview',$overview,PDO::PARAM_STR);
@@ -62,7 +64,7 @@
 			}
 			else 
 			{
-				$error="Something went wrong. Please try again" . $sql;
+				$error="Something went wrong. Please try again" . $userId . $sql;
 			}
 
 		}
@@ -151,6 +153,7 @@
 </head>
 
 <body>
+	<h1><?= $id ?></h1>
 	<!-- Start Switcher -->
 	<?php include('includes/colorswitcher.php');?>
 	<!-- /Switcher -->  
@@ -224,6 +227,7 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 														<div class="col-sm-4">
+															<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
 															<input type="text" name="productName" id="productName" class="form-control" required>
 														</div>
 

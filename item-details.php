@@ -108,7 +108,8 @@
   {
     foreach($results as $result)
     {  
-      $_SESSION['brndid']=$result->bid;  
+      $_SESSION['brndid']=$result->bid; 
+      $providerID = $result->user_id; 
 ?>  
 
 <section id="listing_img_slider">
@@ -549,6 +550,46 @@
 
 
 
+
+              <!-- Swap -->
+              <div role="tabpanel" class="tab-pane" id="swap">                
+                <p>         
+                  <?php
+                  $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+                  $user_query = $dbh->prepare($user_sql);
+                  $user_query->bindParam(':email', $email, PDO::PARAM_STR);
+                  $user_query->execute();
+                  $user_results = $user_query->fetch();
+
+                  $user_id = $user_results["id"];
+                  
+                  $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
+                          FROM tblpostitem as item 
+                          JOIN tblusers as user
+                          ON item.user_id = user.id
+                          WHERE user_id = :user_id";
+                    
+                    $query = $dbh->prepare($self_items_sql);
+                    $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                    $query->execute();
+                    $results = $query->fetchAll(PDO::FETCH_OBJ);                      
+                    ?>
+                    <h2>Item you have:</h2>
+                    <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
+                    <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
+                    <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
+                    <select name="receiver_item_id" id="receiver_item_id">
+                      <?php
+                      foreach ($results as $result) {                      
+                      ?>
+                        <option style="background: #346BE0; color: white; padding: 2em; border-radius: 15px;" value="<?php echo htmlentities($result->itemID) ?>"><?php echo htmlentities($result->productName) ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>                    
+                  <button id="swap-with-owner-btn">Swap with owner</button>
+                </p>
+              </div>
 
               <!--  -->
               
@@ -1001,6 +1042,10 @@
 <?php include('includes/forgotpassword.php');?>
 
 <script src="assets/js/jquery.min.js"></script>
+
+<!-- Logics -->
+<script src="js/swap/swap.js"></script>
+
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
 <script src="assets/switcher/js/switcher.js"></script>

@@ -38,11 +38,11 @@
                 
         // Added to swap_records table
         $newquery = $dbh->prepare($insert_record_sql);
-        $newquery->bindParam(':receiver_item_id', intval($row_result["item_id"]), PDO::PARAM_INT);
+        $newquery->bindParam(':receiver_item_id', intval($row_result["receiver_item_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':user_id', $user_id);
         $newquery->bindParam(':receiver_id', intval($row_result["receiver_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':provider_id', intval($row_result["provider_id"]), PDO::PARAM_INT);
-        $newquery->bindParam(':item_id', intval($row_result["receiver_item_id"]), PDO::PARAM_INT);
+        $newquery->bindParam(':item_id', intval($row_result["item_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':status', intval($row_result["status"]), PDO::PARAM_INT); // 0 pending, 1 accept, -1 reject
         $newquery->execute();
     

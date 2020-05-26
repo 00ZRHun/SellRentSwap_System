@@ -75,6 +75,10 @@
   <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
 </head>
 <body>
 
@@ -134,6 +138,10 @@
 
 
 <!-- body -->
+  <!-- php global variable -->
+<?php
+  $name = $result->productName;
+?>
   <!--Listing-detail-->
 <section class="listing-detail">
   <div class="container">
@@ -142,7 +150,7 @@
       <!-- col 1( name, title ) -->
       <div class="col-md-9">
         <h2>
-          <!-- <?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?> -->
+          <?php echo htmlentities($name);?> , <?php echo htmlentities($result->usedYear);?> Used Years
         </h2>
       </div>
       <!-- col 2( price ) -->
@@ -176,6 +184,9 @@
             </li>
           </ul>
         </div> -->
+        <div class="main_features">
+              <?php echo htmlentities($result->overview);?>
+        </div>
 
         <!-- tabs( overview, accessories) -->
         <div class="listing_more_info">
@@ -183,79 +194,362 @@
           <!-- 1) -->
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
-              <!-- Sell -->
-              <li role="presentation" class="active col-md-4">
-                <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
-                  Sell
-                </a>
-              </li>
-              <!-- Rent -->
-              <li role="presentation" class="col-md-4">
-                <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
-                  Rent
-                </a>
-              </li>
-              <!-- Swap -->
-              <li role="presentation" class="col-md-4">
-                <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                  Swap
-                </a>
-              </li>
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!--  -->
+              <!-- <div class="active">
+                <li role="presentation" class="col-md-4">
+                  <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
+                    Sell
+                  </a>
+                </li>
+              </div> -->
+              <!--  -->
+              <!--  -->
+
+              <!-- SELL -->
+              <?php 
+                if($result->sell == 1){ 
+              ?>
+                <!-- Sell -->
+                <li role="presentation" class="active col-md-4">
+                  <a href="#sell" aria-controls="sell" role="tab" data-toggle="tab">
+                    Sell
+                  </a>
+                </li>
+
+                <!-- Rent -->
+                <?php 
+                  if($result->rent == 1){ 
+                ?>
+                  <li role="presentation" class="col-md-4">
+                    <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
+                      Rent
+                    </a>
+                  </li>
+                <?php 
+                  }
+                ?>
+
+                <!-- Swap -->
+                <?php 
+                  if($result->swap == 1){ 
+                ?>
+                  <li role="presentation" class="col-md-4">
+                    <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
+                      Swap
+                    </a>
+                  </li>
+                <?php 
+                  }
+                ?>
+
+
+              <!-- RENT -->
+              <?php 
+                }else if($result->rent == 1){ 
+              ?>
+                  <li role="presentation" class="col-md-4 active">
+                    <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
+                      Rent
+                    </a>
+                  </li>
+                  
+                  <!-- Swap -->
+                  <?php 
+                    if($result->swap == 1){ 
+                  ?>
+                    <li role="presentation" class="col-md-4">
+                      <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
+                        Swap
+                      </a>
+                    </li>
+                  <?php 
+                    }
+                  ?>
+
+
+              <!-- SWAP -->
+              <?php 
+                }else if($result->swap == 1){ 
+              ?>
+                <li role="presentation" class="col-md-4">
+                  <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
+                    Swap
+                  </a>
+                </li>
+              <?php
+                }
+              ?>
+              
+
+
+
             </ul>
             
           <!-- 2) -->
             <!-- Tab panes -->
             <div class="tab-content"> 
-              <!-- Sell -->
-             <div role="tabpanel" class="tab-pane active" id="sell">
-                <p>
-                  <!-- Sell
-                  <?php echo htmlentities($result->overview);?> -->
+              <!-- SELL -->
+              <?php 
+                if($result->sell == 1){ 
+              ?>
+                <!-- Sell -->
+                <div role="tabpanel" class="tab-pane active" id="sell">
+                  <p>
+                    <!-- Sell
+                    <?php echo htmlentities($result->overview);?> -->
+                    <!--  -->
+                    <!-- payment( PayPal ) -->
+                    <div id="payment-box">
+                            <!-- <img src="images/camera.jpg" /> -->
+                            <h4 class="txt-title">
+                              Product Name : 
+                              <?php echo htmlentities($name);?>
+                            </h4>
+                            <div class="txt-price">
+                              Total Price : 
+                              RM<?php echo htmlentities($result->totalPrice);?>
+                            </div>
+                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                                method="post" target="_top">
+                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
+                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
+                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#1');?>'> 
+                                <input type='hidden' name='amount' value='<?php echo htmlentities($result->totalPrice);?>'>
+                                <input type='hidden' name='no_shipping' value='1'> 
+                                <input type='hidden' name='currency_code' value='MYR'> 
+                                <input type='hidden' name='notify_url'
+                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
+                                <input type='hidden' name='cancel_return'
+                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
+                                <input type='hidden' name='return'
+                                    value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
+                                <input type="hidden" name="cmd" value="_xclick">
+
+                                <input
+                                    type="submit" name="pay_now" id="pay_now"
+                                    Value="Pay Now"
+                                >
+                            </form>
+                    </div>
+                    <!--  -->
+                  </p>
+                </div>
+
+                <!-- Rent -->
+                <?php 
+                  if($result->rent == 1){ 
+                ?>
+                  <div role="tabpanel" class="tab-pane" id="rent">
+                    <p>
+                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                    </p>
+                    <!--  -->
+                    <!-- payment( PayPal ) -->
+                    <div id="payment-box">
+                            <!-- <img src="images/camera.jpg" /> -->
+                            <h4 class="txt-title">
+                              Product Name : 
+                              <?php echo htmlentities($name);?>
+                            </h4>
+                            <div class="txt-price">
+                              Price Per Day : 
+                              RM<?php echo htmlentities($result->pricePerDay);?>
+                            </div>
+                            
+                            <div>
+                              <form name="form" action="" method="get">
+                                  <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
+                                  <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+                                  <input type='number' name='rentDay' value='0'>
+                                  <button type="submit">Check Price</button>
+                              </form>
+
+                              <!-- <?php echo $_GET['rentDay']; ?> -->
+                              <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+
+                            </div>
+
+                            
+
+                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                                method="post" target="_top">
+                                <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+                                <input type='number' name='rentDay' value='0'> -->
+
+                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
+                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
+                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
+                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
+                                <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+                                <input type='hidden' name='no_shipping' value='1'> 
+                                <input type='hidden' name='currency_code' value='MYR'> 
+                                <input type='hidden' name='notify_url'
+                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
+                                <input type='hidden' name='cancel_return'
+                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
+                                <input type='hidden' name='return'
+                                    value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
+                                <input type="hidden" name="cmd" value="_xclick">
+
+                                <button
+                                    type="submit" name="pay_now" id="pay_now"
+                                    Value="Rent"
+                                >
+                                  Rent
+                                <button>
+                            </form>
+                    </div>
+                    <!-- JQuery( btn trigger another btn ) -->
+                    <script>
+                      /* $( "button" ).first().click(function() {
+                        update( $( "span" ).first() );
+                      }); */
+                      
+                      $( "button" ).last().click(function() {
+                        $( "button" ).first().trigger( "click" );
+                        // update( $( "span" ).last() );
+                      });
+                      
+                      /* function update( j ) {
+                        var n = parseInt( j.text(), 10 );
+                        j.text( n + 1 );
+                      } */
+                    </script>
+                    <!--  -->
+                  </div>
+                <?php 
+                  }
+                ?>
+
+                <!-- Swap -->
+                <?php 
+                  if($result->swap == 1){ 
+                ?>
+                  <div role="tabpanel" class="tab-pane" id="swap">
+                    <p>
+                      Swap
+                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                    </p>
+                  </div>
+                <?php 
+                  }
+                ?>
+
+              <!-- RENT -->
+              <?php 
+                }else if($result->rent == 1){ 
+              ?>
+                <div role="tabpanel" class="tab-pane active" id="rent">
+                  <p>
+                    <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                  </p>
                   <!--  -->
                   <!-- payment( PayPal ) -->
                   <div id="payment-box">
-                          <!-- <img src="images/camera.jpg" /> -->
-                          <h4 class="txt-title">
-                            Product Name : 
-                            <?php echo htmlentities($result->productName);?>
-                          </h4>
-                          <div class="txt-price">
-                            Total Price : 
-                            RM<?php echo htmlentities($result->totalPrice);?>
-                          </div>
-                          <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-                              method="post" target="_top">
-                              <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
-                              <input type='hidden' name='item_name' value='<?php echo htmlentities($result->productName);?>'>
-                              <input type='hidden' name='item_number' value='CAM#N1'> 
-                              <input type='hidden' name='amount' value='<?php echo htmlentities($result->totalPrice);?>'>
-                              <input type='hidden' name='no_shipping' value='1'> 
-                              <input type='hidden' name='currency_code' value='MYR'> 
-                              <input type='hidden' name='notify_url'
-                                  value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
-                              <input type='hidden' name='cancel_return'
-                                  value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
-                              <input type='hidden' name='return'
-                                  value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
-                              <input type="hidden" name="cmd" value="_xclick">
+                      <!-- <img src="images/camera.jpg" /> -->
+                      <h4 class="txt-title">
+                        Product Name : 
+                        <?php echo htmlentities($name);?>
+                      </h4>
+                      <div class="txt-price">
+                        Price Per Day : 
+                        RM<?php echo htmlentities($result->pricePerDay);?>
+                      </div>
+                      
+                      <div>
+                        <form name="form" action="" method="get">
+                            <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
+                            <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+                            <input type='number' name='rentDay' value='0'>
+                            <button type="submit">Check Price</button>
+                        </form>
 
-                              <input
-                                  type="submit" name="pay_now" id="pay_now"
-                                  Value="Pay Now"
-                              >
-                          </form>
+                        <!-- <?php echo $_GET['rentDay']; ?> -->
+                        <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+                      </div>
+                      
+                      <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+                          method="post" target="_top">
+                          <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+                          <input type='number' name='rentDay' value='0'> -->
+
+                          <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
+                          <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
+                          <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
+                          <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
+                          <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+                          <input type='hidden' name='no_shipping' value='1'> 
+                          <input type='hidden' name='currency_code' value='MYR'> 
+                          <input type='hidden' name='notify_url'
+                              value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
+                          <input type='hidden' name='cancel_return'
+                              value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
+                          <input type='hidden' name='return'
+                              value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
+                          <input type="hidden" name="cmd" value="_xclick">
+
+                          <!-- <button
+                              type="submit" name="pay_now" id="pay_now"
+                              value="Rent"
+                          >
+                            RENT
+                          <button> -->
+                          <button>RENT<button>
+                      </form>
                   </div>
+                  <!-- JQuery( btn trigger another btn ) -->
+                  <script>
+                    /* $( "button" ).first().click(function() {
+                      update( $( "span" ).first() );
+                    }); */
+                    
+                    $( "button" ).last().click(function() {
+                      $( "button" ).first().trigger( "click" );
+                      // update( $( "span" ).last() );
+                    });
+                    
+                    /* function update( j ) {
+                      var n = parseInt( j.text(), 10 );
+                      j.text( n + 1 );
+                    } */
+                  </script>
                   <!--  -->
-                </p>
-              </div>
+                </div>
+                
+                <!-- Swap -->
+                <?php 
+                  if($result->swap == 1){ 
+                ?>
+                  <div role="tabpanel" class="tab-pane" id="swap">
+                    <p>
+                      Swap
+                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                    </p>
+                  </div>
+                <?php 
+                  }
+                ?>
+              <!-- SWAP -->
+              <?php 
+                }else if($result->swap == 1){ 
+              ?>
+                <div role="tabpanel" class="tab-pane  active" id="swap">
+                  <p>
+                    Swap
+                    <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
+                  </p>
+                </div>
+              <?php
+                }
+              ?>
+                  
+              
 
-              <!-- Rent -->
-              <div role="tabpanel" class="tab-pane" id="rent">
-                <p>
-                  Rent
-                  <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                </p>
-              </div>
+
+
 
               <!-- Swap -->
               <div role="tabpanel" class="tab-pane" id="swap">                
@@ -625,7 +919,7 @@
                 <!-- row 1 -->
                 <h5>
                   <a href="item-details.php?vhid=<?php echo htmlentities($result->id);?>">
-                    <?php echo htmlentities($result->productName);?>
+                    <?php echo htmlentities($name);?>
                      , <?php echo htmlentities($result->usedYear);?> Years Used.
                   </a>
                 </h5>

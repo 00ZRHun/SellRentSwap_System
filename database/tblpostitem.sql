@@ -22,6 +22,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tblpostitem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
   `productName` varchar(100) DEFAULT NULL,
   `usedYear` int(4) DEFAULT NULL,
   `overview` longtext,

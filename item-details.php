@@ -358,18 +358,49 @@
                               RM<?php echo htmlentities($result->pricePerDay);?>
                             </div>
                             
+                            <!--  -->
+                            <!--  -->
+                            <!--  -->
                             <div>
                               <form name="form" action="" method="get">
                                   <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
-                                  <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+                                  <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
                                   <input type='number' name='rentDay' value='0'>
-                                  <button type="submit">Check Price</button>
+                                  <button type="submit">Check Price</button> -->
                               </form>
 
                               <!-- <?php echo $_GET['rentDay']; ?> -->
-                              <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+                              <!-- <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
 
                             </div>
+                            <!--  -->
+                              <br>
+                              <!--  -->
+                             
+                            <!--  -->
+                            <form name="form" action="" method="get">
+                              <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
+
+                              <input type='number' class='rentDay' name='rentDay' placeholder="0" /> Day(s)
+                              <br>
+                              <!-- RM<input type='number' id='totalPrice' name='totalPrice' placeholder="0.00" disabled /> -->
+                              <!-- <input type='text' id='totalPrice' name='totalPrice' value="<?= $totalPrice ?>" disabled />
+                              <input type='text' id='totalPrice' name='totalPrice' value="<?= $id ?>" disabled /> -->
+                              <button id="primaryButton" type="submit"  onclick="alert('abc')">Check Price</button>
+                            </form>
+
+
+                            <!--  -->
+                            <!--  -->
+
+
+                            <?php
+                              $pricePerDay = $result->pricePerDay;
+                              /* $totalPrice = $_COOKIE[sum];
+
+                              echo $totalPrice; */
+                            ?>
+                            <!--  -->
 
                             
 
@@ -381,8 +412,8 @@
                                 <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
                                 <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
                                 <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
-                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
                                 <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
+                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($_GET['totalPrice']));?>'> -->
                                 <input type='hidden' name='no_shipping' value='1'> 
                                 <input type='hidden' name='currency_code' value='MYR'> 
                                 <input type='hidden' name='notify_url'
@@ -393,31 +424,58 @@
                                     value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
                                 <input type="hidden" name="cmd" value="_xclick">
 
-                                <button
+                                <!-- <button
                                     type="submit" name="pay_now" id="pay_now"
                                     Value="Rent"
                                 >
                                   Rent
-                                <button>
+                                <button> -->
+
+                                <!-- <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
+                                <button onclick="document.getElementById('primaryButton').click()" type="submit" name="pay_now" id="pay_now">Rent</button>
+                                <!-- <button>Rent</button> -->
+
                             </form>
+                              <!--  -->
+                              <!-- <button onclick="alert('abc')">Go to Google</button></a>
+    <button>Rent</button> -->
+                    <!-- <button id="primaryButton" onclick="alert('abc')">Go to Google</button></a>
+                    <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
+
                     </div>
-                    <!-- JQuery( btn trigger another btn ) -->
-                    <script>
-                      /* $( "button" ).first().click(function() {
-                        update( $( "span" ).first() );
-                      }); */
-                      
-                      $( "button" ).last().click(function() {
-                        $( "button" ).first().trigger( "click" );
-                        // update( $( "span" ).last() );
-                      });
-                      
-                      /* function update( j ) {
-                        var n = parseInt( j.text(), 10 );
-                        j.text( n + 1 );
-                      } */
-                    </script>
+
                     <!--  -->
+
+                    <!--  -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
+                            <script>
+                              // we used jQuery 'keyup' to trigger the computation as the user type
+                              $('.rentDay').keyup(function () {
+                              
+                                  // initialize the sum (total price) to zero
+                                  var sum = 0;
+                                  
+                                  // we use jQuery each() to loop through all the textbox with 'price' class
+                                  // and compute the sum for each loop
+                                  $('.rentDay').each(function() {
+                                      sum += (Number($(this).val()) * <?= $pricePerDay ?>);
+                                  });
+                                  
+                                  // <?= $totalPrice ?> = sum;
+                                  // set the computed value to 'totalPrice' textbox
+                                  $('#totalPrice').val(sum);
+                                  
+                                  document.cookie = "sum";
+                              });
+
+                              <?php
+                                $totalPrice = $_COOKIE['sum'];
+
+                                echo $totalPrice;
+                              ?>
+                            </script>
+                    <!--  -->
+                    
                   </div>
                 <?php 
                   }

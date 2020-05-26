@@ -1,73 +1,6 @@
-<?php
-	session_start();
-	error_reporting(0);
-	include('includes/config.php');
-
-	if(strlen($_SESSION['alogin'])==0)
-	{	
-		echo 'aasdjfb ';
-		header('location:index.php');
-	}
-	else
-	{ 
-		if(isset($_POST['submit']))
-		{
-			$productName=$_POST['productName'];
-			$usedYear=$_POST['usedYear'];
-			$overview=$_POST['overview'];
-			$totalPrice=$_POST['totalPrice'];
-			$pricePerDay=$_POST['pricePerDay'];
-			$value=$_POST['value'];
-			$payPalBusinessAccount=$_POST['payPalBusinessAccount'];
-			$contactNo=$_POST['contactNo'];
-			$vimage1=$_FILES["img1"]["name"];
-			$vimage2=$_FILES["img2"]["name"];
-			$vimage3=$_FILES["img3"]["name"];
-			$vimage4=$_FILES["img4"]["name"];
-			$vimage5=$_FILES["img5"]["name"];
-			$sell=$_POST['sell'];
-			$rent=$_POST['rent'];
-			$swap=$_POST['swap'];
-			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
-			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/itemImages/".$_FILES["img2"]["name"]);
-			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/itemImages/".$_FILES["img3"]["name"]);
-			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
-
-			$sql="INSERT INTO tblpostitem(productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
-			 VALUES(:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
-			$query = $dbh->prepare($sql);
-			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
-			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
-			$query->bindParam(':overview',$overview,PDO::PARAM_STR);
-			$query->bindParam(':totalPrice',$totalPrice,PDO::PARAM_STR);
-			$query->bindParam(':pricePerDay',$pricePerDay,PDO::PARAM_STR);
-			$query->bindParam(':value',$value,PDO::PARAM_STR);
-			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
-			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
-			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
-			$query->bindParam(':rent',$rent,PDO::PARAM_STR);
-			$query->bindParam(':swap',$swap,PDO::PARAM_STR);
-			
-			$query->execute();
-			$lastInsertId = $dbh->lastInsertId();
-			if($lastInsertId)
-			{
-				$msg="Item posted successfully";
-			}
-			else 
-			{
-				$error="Something went wrong. Please try again" . $sql;
-			}
-
-		}
-?>
-
+<!--  -->
+<!--  -->
+<!--  -->
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -82,7 +15,6 @@
 	
 	<title>Car Rental Portal | Post Item</title>
 
-	<!--  -->
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<!-- Sandstone Bootstrap CSS -->

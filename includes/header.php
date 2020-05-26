@@ -67,16 +67,29 @@
                 <i class="fa fa-user-circle" aria-hidden="true"></i> 
                 <?php 
                   $email=$_SESSION['login'];
-                  $sql ="SELECT FullName FROM tblusers WHERE EmailId=:email ";
+                  $sql ="SELECT id, FullName FROM tblusers WHERE EmailId=:email ";
                   $query= $dbh -> prepare($sql);
                   $query-> bindParam(':email', $email, PDO::PARAM_STR);
                   $query-> execute();
                   $results=$query->fetchAll(PDO::FETCH_OBJ);
+
+                  // $id = $results->id;
+                  // echo $results->id;
+                  $id = 0;
+                  // echo $results->id;
+                  // echo "ancad";
+                  // echo $email;
+
                   if($query->rowCount() > 0)
                   {
                     foreach($results as $result)
                       {
-                        echo htmlentities($result->FullName); }}
+                        echo htmlentities($result->FullName);
+
+                        // GLOBAL VARIABLE( id )
+                        $id = $result->id;
+                      }
+                  }
                 ?>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>

@@ -53,7 +53,7 @@ $('#accept-request-btn').click(function () {
             swap_request_id
         },
         success: (data) => {
-            if (data.code == "200") {
+            if (data.code == "200") {                
                 alert("You have accepted the request.");
                 window.location = "swap_request.php";
             }                

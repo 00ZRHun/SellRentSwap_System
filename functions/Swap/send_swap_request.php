@@ -18,7 +18,7 @@
         $query->bindParam(':receiver_id', intval($receiver_id), PDO::PARAM_INT);
         $query->bindParam(':provider_id', intval($provider_id), PDO::PARAM_INT);
         $query->bindParam(':item_id', intval($item_id), PDO::PARAM_INT);
-        $query->bindParam(':status', $status, PDO::PARAM_INT); // 0 pending, 1 success, -1 fail
+        $query->bindParam(':status', $status, PDO::PARAM_INT); // 0 pending, 1 accept, -1 reject
         $query->execute();
     
         echo json_encode(['code' => 200, 'msg' => "Success"]);

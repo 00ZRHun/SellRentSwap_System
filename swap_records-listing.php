@@ -70,10 +70,10 @@ $user_results = $user_query->fetch();
 $user_id = $user_results['id'];
 
 $sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
-                FROM swap_requests as sr 
+                FROM swap_records as sr 
                 JOIN tblpostitem as item
                 ON item.id = sr.item_id
-                WHERE sr.provider_id=:provider_id AND sr.status = 0";
+                WHERE sr.provider_id=:provider_id";
 
 $query = $dbh->prepare( $sql );
 $query->bindParam( ':provider_id', $user_id, PDO::PARAM_STR );
@@ -82,8 +82,8 @@ $results = $query->fetchAll( PDO::FETCH_OBJ );
 if ( $query->rowCount() > 0 ) {
 
     foreach ( $results as $result ) {
-        $receiverSql = "SELECT item.productName as receiverItemName, item.id as receiverItemID, user.FullName as receiverName
-                                FROM swap_requests as sr 
+        $receiverSql = "SELECT sr.status, item.productName as receiverItemName, item.id as receiverItemID, user.FullName as receiverName
+                                FROM swap_records as sr 
                                 JOIN tblpostitem as item
                                 ON item.user_id = sr.receiver_id
                                 JOIN tblusers as user
@@ -97,10 +97,11 @@ if ( $query->rowCount() > 0 ) {
         foreach ( $receiverResults as $rResult ) {
             ?>
             <div id = 'swap_request_div' style = 'margin: 1em; background: #346BE0; color: white; padding: 2em; border-radius: 15px;'>
-                <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap your <?php echo htmlentities($result->itemName)  ?> with his <?php echo htmlentities($rResult->receiverItemName)  ?></p>
-                <a style = 'color: #fff' href = 'item-details.php?vhid=<?php echo htmlentities($rResult->receiverItemID) ?>'>View</a>
-                <a id="accept-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Accept</a>
-                <a id="reject-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Reject</a>
+                <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap your <?php echo htmlentities($result->itemName) ?> with his <?php echo htmlentities($rResult->receiverItemName) ?></p>
+                <strong style="opacity: .75">
+                    <?php if($result->status == -1) echo "You rejected this swap request." ?>
+                    <?php if($result->status == 1) echo "You accepted this swap request" ?>
+                </strong>
             </div>
             <?php
         }

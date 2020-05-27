@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     $('#swap-with-owner-btn').click(function (e) {
+        alert('btn clicked');
         e.preventDefault();
 
         // Provider's Item

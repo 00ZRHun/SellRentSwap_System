@@ -1,5 +1,4 @@
 <?php     
-
     include('../../includes/config.php');
     session_start();
     error_reporting(0);
@@ -12,6 +11,9 @@
     $user_results = $user_query->fetch();
 
     $user_id = $user_results["id"];
+    /* echo "abc";
+    echo $_SESSION['login'];
+    echo $user_id; */
 
     // Get data from frontend
     $receiver_item_id = $_POST["receiver_item_id"];
@@ -32,7 +34,7 @@
         $query->bindParam(':user_id', $user_id);
         $query->bindParam(':status', $status, PDO::PARAM_INT); // 0 pending, 1 accept, -1 reject
         $query->execute();
-    
+        
         echo json_encode(['code' => 200, 'msg' => "Success"]);
     } catch(exception $e) {
         echo json_encode(['code' => 400, 'msg' => "Error"]);

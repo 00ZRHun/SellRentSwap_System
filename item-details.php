@@ -113,6 +113,7 @@
 ?>  
 
 <section id="listing_img_slider">
+  <div><?= $providerID ?></div>
   <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" width="900" height="560"></div>
   <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage2);?>" class="img-responsive" alt="image" width="900" height="560"></div>
   <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage3);?>" class="img-responsive" alt="image" width="900" height="560"></div>
@@ -482,7 +483,8 @@
                   }
                 ?>
 
-                <!-- Swap -->
+               <!-- Swap -->
+
               <div role="tabpanel" class="tab-pane" id="swap">                
                 <p>         
                   <?php
@@ -493,6 +495,7 @@
                   $user_results = $user_query->fetch();
 
                   $user_id = $user_results["id"];
+
                   $item_status = 1;
                   
                   $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
@@ -504,6 +507,7 @@
                     $query = $dbh->prepare($self_items_sql);
                     $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                     $query->bindParam(':item_status', $item_status);
+                    
                     $query->execute();
                     $results = $query->fetchAll(PDO::FETCH_OBJ);                      
                     ?>
@@ -511,6 +515,7 @@
                     <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
                     <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
                     <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
+                    
                     <select name="receiver_item_id" id="receiver_item_id">
                       <?php
                       foreach ($results as $result) {                      
@@ -525,6 +530,7 @@
               </div>
 
               <!--  -->
+
 
               <!-- RENT -->
               <?php 
@@ -948,6 +954,9 @@
           $query->execute();
           $results=$query->fetchAll(PDO::FETCH_OBJ);
           $cnt=1;
+
+          echo $results . $query->rowCount();
+
           if($query->rowCount() > 0)
           {
             foreach($results as $result)

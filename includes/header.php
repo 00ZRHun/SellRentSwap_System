@@ -1,10 +1,14 @@
 <header>
+  <!-- header -->
   <div class="default-header">
     <div class="container">
       <div class="row">
+        <!-- logo -->
         <div class="col-sm-3 col-md-2">
           <div class="logo"> <a href="index.php"><img src="assets/images/logo.png" alt="logo"/></a> </div>
         </div>
+
+        <!-- info -->
         <div class="col-sm-9 col-md-10">
           <div class="header_info">
             <div class="header_widgets">
@@ -12,32 +16,34 @@
               <p class="uppercase_text">For Support Mail us :</p>
               <a href="mailto:00ZRHun@gmail.com">00ZRHun@gmail.com</a>
             </div>
+
             <div class="header_widgets">
               <div class="circle_icon"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
               <p class="uppercase_text">Service Helpline Call Us:</p>
               <a href="tel:601110604061">+6011-1060 4061</a>
             </div>
+
             <div class="social-follow">
-              
             </div>
-            <?php   if(strlen($_SESSION['login'])==0)
-              {	
-            ?>
-            <div class="login_btn">
-              <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
-                Login / Register
-                <?php
-                  $email=$_SESSION['login'];
-                  // echo "</br>".$email;
-                ?>
-              </a>
-            </div>
-            <?php
-              }
-              else{ 
-                echo "Welcome To Car rental portal";
-                /* $email=$_SESSION['login'];
-                echo "</br>".$email."abc"; */
+
+            <!-- status( login/register ) -->
+            <?php   
+                if(strlen($_SESSION['login'])==0){	
+              ?>
+                <div class="login_btn">
+                  <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
+                    Login / Register
+                    <?php
+                      $email=$_SESSION['login'];
+                      // echo "</br>".$email;
+                    ?>
+                  </a>
+                </div>
+              <?php
+                }else{ 
+                  echo "Welcome To Car rental portal";
+                  /* $email=$_SESSION['login'];
+                  echo "</br>".$email."abc"; */
               } 
             ?>
           </div>
@@ -59,6 +65,7 @@
           <span class="icon-bar"></span>
         </button>
       </div>
+
       <div class="header_wrap">
         <div class="user_login">
           <ul>
@@ -75,7 +82,7 @@
 
                   // $id = $results->id;
                   // echo $results->id;
-                  $id = 0;
+                  $id = 100;
                   // echo $results->id;
                   // echo "ancad";
                   // echo $email;
@@ -90,9 +97,13 @@
                         $id = $result->id;
                       }
                   }
+
+                  // echo $id;
                 ?>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>
+
+              <!-- dropdown menu( login/- ) -->
               <ul class="dropdown-menu">
                 <?php if($_SESSION['login']){?>
                   <li><a href="profile.php">Profile Settings</a></li>
@@ -116,16 +127,22 @@
             </li>
           </ul>
         </div>
+
+        <!-- search( icon & textbox ) -->
         <div class="header_search">
+          <!-- icon -->
           <div id="search_toggle">
             <i class="fa fa-search" aria-hidden="true"></i>
           </div>
+          <!-- textbox -->
           <form action="#" method="get" id="header-search-form">
             <input type="text" placeholder="Search..." class="form-control">
             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
           </form>
         </div>
       </div>
+
+      <!-- navbat -->
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="nav navbar-nav">
           <li><a href="index.php">Home</a></li>

@@ -40,6 +40,6 @@ CREATE TABLE `tblpostitem` (
   `Vimage4` varchar(120) DEFAULT NULL,
   `Vimage5` varchar(120) DEFAULT NULL,
   `updationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `delmode` varchar(100) DEFAULT '1',
+  `delmode` varchar(100) DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

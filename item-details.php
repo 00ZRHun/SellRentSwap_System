@@ -507,9 +507,9 @@
                     $results = $query->fetchAll(PDO::FETCH_OBJ);                      
                     ?>
                     <h2>Item you have:</h2>
-                    <input type="text" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
-                    <input type="text" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
-                    <input type="text" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
+                    <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
+                    <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
+                    <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
                     <select name="receiver_item_id" id="receiver_item_id">
                       <?php
                       foreach ($results as $result) {                      
@@ -1081,15 +1081,15 @@
 <!--/Back to top--> 
 
 <!--Login-Form -->
-<?php include('includes/login.php');?>
+<?php include('includes/login.php'); ?>
 <!--/Login-Form --> 
 
 <!--Register-Form -->
-<?php include('includes/registration.php');?>
+<?php include('includes/registration.php'); ?>
 <!--/Register-Form --> 
 
 <!--Forgot-password-Form -->
-<?php include('includes/forgotpassword.php');?>
+<?php include('includes/forgotpassword.php'); ?>
 
 <script src="assets/js/jquery.min.js"></script>
 

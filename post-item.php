@@ -3,7 +3,7 @@
 	error_reporting(0);
 	include('includes/config.php');
 
-	if(strlen($_SESSION['alogin'])==0)
+	if(strlen($_SESSION['login'])==0)
 	{	
 		echo 'aasdjfb ';
 		header('location:index.php');
@@ -35,7 +35,7 @@
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
 			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
 
-			$sql="INSERT INTO tblpostitem(userId, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
+			$sql="INSERT INTO tblpostitem(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
 			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
 			$query = $dbh->prepare($sql);
 			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
@@ -153,7 +153,7 @@
 </head>
 
 <body>
-	<h1><?= $id ?></h1>
+	<!-- <h1><?= $id ?></h1> -->
 	<!-- Start Switcher -->
 	<?php include('includes/colorswitcher.php');?>
 	<!-- /Switcher -->  
@@ -202,20 +202,20 @@
 
 											<!-- notification( htmlentities ) -->
 											<?php 
-													if($error){
-												?>
-												<div class="errorWrap">
-													<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-												</div>
-												<?php 
-													} 
-													if($msg){
-												?>
-												<div class="succWrap">
-													<strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
-												</div>
-												<?php
-													}
+												if($error){
+													?>
+													<div class="errorWrap">
+														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
+													</div>
+													<?php 
+												} 
+												if($msg){
+													?>
+													<div class="succWrap">
+														<strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
+													</div>
+													<?php
+												}	
 											?>
 
 											<div class="panel-body">
@@ -227,7 +227,7 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 														<div class="col-sm-4">
-															<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
+															<input type="text" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
 															<input type="text" name="productName" id="productName" class="form-control" required>
 														</div>
 
@@ -248,12 +248,13 @@
 																	$results = $query -> fetchAll(PDO::FETCH_OBJ);
 																	if($query -> rowCount() > 0)
 																	{
-																	foreach($results as $result)
-																	{
-																?>
-																<option value="<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->BrandName);?></option>
+																		foreach($results as $result)
+																		{
+																	?>
+																	<option value="<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->BrandName);?></option>
 																<?php
-																	}} 
+																		}
+																	} 
 																?>
 															</select>
 														</div> -->

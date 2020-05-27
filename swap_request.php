@@ -1,155 +1,155 @@
 <?php
-session_start();
-include( 'includes/config.php' );
-error_reporting( 0 );
-
+    session_start();
+    include( 'includes/config.php' );
+    error_reporting( 0 );
 ?>
 
 <!DOCTYPE HTML>
 <html lang = 'en'>
-
 <head>
-<meta http-equiv = 'Content-Type' content = 'text/html; charset=utf-8'>
-<meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
-<meta name = 'viewport' content = 'width=device-width,initial-scale=1'>
-<meta name = 'keywords' content = ''>
-<meta name = 'description' content = ''>
-<title>Car Rental Port | Vehicle Details</title>
-<!--Bootstrap -->
-<link rel = 'stylesheet' href = 'assets/css/bootstrap.min.css' type = 'text/css'>
-<!--Custome Style -->
-<link rel = 'stylesheet' href = 'assets/css/style.css' type = 'text/css'>
-<!--OWL Carousel slider-->
-<link rel = 'stylesheet' href = 'assets/css/owl.carousel.css' type = 'text/css'>
-<link rel = 'stylesheet' href = 'assets/css/owl.transitions.css' type = 'text/css'>
-<!--slick-slider -->
-<link href = 'assets/css/slick.css' rel = 'stylesheet'>
-<!--bootstrap-slider -->
-<link href = 'assets/css/bootstrap-slider.min.css' rel = 'stylesheet'>
-<!--FontAwesome Font Style -->
-<link href = 'assets/css/font-awesome.min.css' rel = 'stylesheet'>
+    <meta http-equiv = 'Content-Type' content = 'text/html; charset=utf-8'>
+    <meta http-equiv = 'X-UA-Compatible' content = 'IE=edge'>
+    <meta name = 'viewport' content = 'width=device-width,initial-scale=1'>
+    <meta name = 'keywords' content = ''>
+    <meta name = 'description' content = ''>
 
-<!-- SWITCHER -->
-<link rel = 'stylesheet' id = 'switcher-css' type = 'text/css' href = 'assets/switcher/css/switcher.css' media = 'all' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/red.css' title = 'red' media = 'all' data-default-color = 'true' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/orange.css' title = 'orange' media = 'all' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/blue.css' title = 'blue' media = 'all' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/pink.css' title = 'pink' media = 'all' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/green.css' title = 'green' media = 'all' />
-<link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/purple.css' title = 'purple' media = 'all' />
-<link rel = 'apple-touch-icon-precomposed' sizes = '144x144' href = 'assets/images/favicon-icon/apple-touch-icon-144-precomposed.png'>
-<link rel = 'apple-touch-icon-precomposed' sizes = '114x114' href = 'assets/images/favicon-icon/apple-touch-icon-114-precomposed.html'>
-<link rel = 'apple-touch-icon-precomposed' sizes = '72x72' href = 'assets/images/favicon-icon/apple-touch-icon-72-precomposed.png'>
-<link rel = 'apple-touch-icon-precomposed' href = 'assets/images/favicon-icon/apple-touch-icon-57-precomposed.png'>
-<link rel = 'shortcut icon' href = 'assets/images/favicon-icon/favicon.png'>
-<link href = 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel = 'stylesheet'>
+    <title>Car Rental Port | Vehicle Details</title>
+    <!--Bootstrap -->
+    <link rel = 'stylesheet' href = 'assets/css/bootstrap.min.css' type = 'text/css'>
+    <!--Custome Style -->
+    <link rel = 'stylesheet' href = 'assets/css/style.css' type = 'text/css'>
+    <!--OWL Carousel slider-->
+    <link rel = 'stylesheet' href = 'assets/css/owl.carousel.css' type = 'text/css'>
+    <link rel = 'stylesheet' href = 'assets/css/owl.transitions.css' type = 'text/css'>
+    <!--slick-slider -->
+    <link href = 'assets/css/slick.css' rel = 'stylesheet'>
+    <!--bootstrap-slider -->
+    <link href = 'assets/css/bootstrap-slider.min.css' rel = 'stylesheet'>
+    <!--FontAwesome Font Style -->
+    <link href = 'assets/css/font-awesome.min.css' rel = 'stylesheet'>
+
+    <!-- SWITCHER -->
+    <link rel = 'stylesheet' id = 'switcher-css' type = 'text/css' href = 'assets/switcher/css/switcher.css' media = 'all' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/red.css' title = 'red' media = 'all' data-default-color = 'true' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/orange.css' title = 'orange' media = 'all' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/blue.css' title = 'blue' media = 'all' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/pink.css' title = 'pink' media = 'all' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/green.css' title = 'green' media = 'all' />
+    <link rel = 'alternate stylesheet' type = 'text/css' href = 'assets/switcher/css/purple.css' title = 'purple' media = 'all' />
+    <link rel = 'apple-touch-icon-precomposed' sizes = '144x144' href = 'assets/images/favicon-icon/apple-touch-icon-144-precomposed.png'>
+    <link rel = 'apple-touch-icon-precomposed' sizes = '114x114' href = 'assets/images/favicon-icon/apple-touch-icon-114-precomposed.html'>
+    <link rel = 'apple-touch-icon-precomposed' sizes = '72x72' href = 'assets/images/favicon-icon/apple-touch-icon-72-precomposed.png'>
+    <link rel = 'apple-touch-icon-precomposed' href = 'assets/images/favicon-icon/apple-touch-icon-57-precomposed.png'>
+    <link rel = 'shortcut icon' href = 'assets/images/favicon-icon/favicon.png'>
+    <link href = 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel = 'stylesheet'>
 </head>
-
 <body>
 
 <!-- Start Switcher -->
-<?php include( 'includes/colorswitcher.php' );
-?>
+<?php include( 'includes/colorswitcher.php' ); ?>
 <!-- /Switcher -->
 
 <!--Header-->
-<?php include( 'includes/header.php' );
-?>
+<?php include( 'includes/header.php' ); ?>
 <!-- /Header -->
+
+<!-- <h1>
+    <?= $id ?>
+</h1> -->
 
 <!-- Content -->
 <section style = 'min-height: 100vh;' class = 'container'>
+    <?php
+        /* $user_sql = 'SELECT id FROM tblusers WHERE EmailId=:email';
+        $user_query = $dbh->prepare( $user_sql );
+        $user_query->bindParam( ':email', $_SESSION['login'], PDO::PARAM_STR );
+        $user_query->execute();
+        $user_results = $user_query->fetch();
 
-<?php
-$user_sql = 'SELECT id FROM tblusers WHERE EmailId=:email';
-$user_query = $dbh->prepare( $user_sql );
-$user_query->bindParam( ':email', $_SESSION['login'], PDO::PARAM_STR );
-$user_query->execute();
-$user_results = $user_query->fetch();
+        $user_id = $user_results['id']; */
+        $user_id = $id;
 
-$user_id = $user_results['id'];
+        echo $user_id;
 
-$sql = "SELECT sr.*, item.productName as itemName, item.id as itemID
-                FROM swap_requests as sr 
-                JOIN tblpostitem as item
-                ON item.id = sr.item_id
-                WHERE sr.user_id=:user_id OR sr.provider_id=:user_id AND sr.status = 0";
+        $sql = 
+            "SELECT sr.*, item.productName as itemName, item.id as itemID
+            FROM swap_requests as sr 
+            JOIN tblpostitem as item
+            ON item.id = sr.item_id
+            WHERE sr.user_id=:user_id OR sr.provider_id=:user_id AND sr.status = 0";
 
-$query = $dbh->prepare( $sql );
-$query->bindParam( ':user_id', $user_id, PDO::PARAM_STR );
-$query->execute();
-$results = $query->fetchAll( PDO::FETCH_OBJ );
-if ( $query->rowCount() > 0 ) {
-
-    foreach ( $results as $result ) {
-        $receiverSql = "SELECT item.productName as receiverItemName, item.id as receiverItemID, user.FullName as receiverName
-                                FROM swap_requests as sr 
-                                JOIN tblpostitem as item
-                                ON item.user_id = sr.receiver_id
-                                JOIN tblusers as user
-                                ON user.id = sr.receiver_id
-                                WHERE item.user_id=:receiver_id";
-
-        $query = $dbh->prepare( $receiverSql );
-        $query->bindParam( ':receiver_id', $result->receiver_id, PDO::PARAM_STR );
+        $query = $dbh->prepare( $sql );
+        $query->bindParam( ':user_id', $user_id, PDO::PARAM_STR );
         $query->execute();
-        $receiverResults = $query->fetchAll( PDO::FETCH_OBJ );
-        foreach ( $receiverResults as $rResult ) {
-            ?>
-            <div id = 'swap_request_div' style = 'margin: 1em; background: #346BE0; color: white; padding: 2em; border-radius: 15px;'>
-                <!-- If is provider checking request -->
-                <?php if($result->provider_id == $user_id) {?>
-                <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
-                <a style = 'color: #fff' href = 'item-details.php?vhid=<?php echo htmlentities($rResult->receiverItemID) ?>'>View</a>
-                <a id="accept-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Accept</a>
-                <a id="reject-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Reject</a>
-                <?php } else {?>
-                <!-- If is receiver checking request -->
-                <p>You want to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
-                <strong>
-                <?php if($result->status == -1) echo "Swap request rejected." ?>
-                <?php if($result->status == 1) echo "Swap request accepted" ?>
-                <?php if($result->status == 0) echo "Pending" ?>
-                </strong>
-                <?php } ?>
-            </div>
-            
+        $results = $query->fetchAll( PDO::FETCH_OBJ );
+        if ( $query->rowCount() > 0 ) {
+
+            foreach ( $results as $result ) {
+                $receiverSql = 
+                    "SELECT item.productName as receiverItemName, item.id as receiverItemID, user.FullName as receiverName
+                    FROM swap_requests as sr 
+                    JOIN tblpostitem as item
+                    ON item.user_id = sr.receiver_id
+                    JOIN tblusers as user
+                    ON user.id = sr.receiver_id
+                    WHERE item.user_id=:receiver_id";
+
+                $query = $dbh->prepare( $receiverSql );
+                $query->bindParam( ':receiver_id', $result->receiver_id, PDO::PARAM_STR );
+                $query->execute();
+                $receiverResults = $query->fetchAll( PDO::FETCH_OBJ );
+            foreach ( $receiverResults as $rResult ) {
+    ?>
+                <div id = 'swap_request_div' style = 'margin: 1em; background: #346BE0; color: white; padding: 2em; border-radius: 15px;'>
+                    <!-- If is provider checking request -->
+                    <?php if($result->provider_id == $user_id) {?>
+                    <p><?php echo htmlentities($rResult->receiverName) ?> wants to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
+                    <a style = 'color: #fff' href = 'item-details.php?vhid=<?php echo htmlentities($rResult->receiverItemID) ?>'>View</a>
+                    <a id="accept-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Accept</a>
+                    <a id="reject-request-btn" data-requestID="<?php echo $result->id ?>" style = 'color: #fff'>Reject</a>
+                    <?php } else {?>
+                    <!-- If is receiver checking request -->
+                    <p>You want to swap <?php echo htmlentities($result->itemName)  ?> with <?php echo htmlentities($rResult->receiverItemName)  ?></p>
+                    <strong>
+                    <?php if($result->status == -1) echo "Swap request rejected." ?>
+                    <?php if($result->status == 1) echo "Swap request accepted" ?>
+                    <?php if($result->status == 0) echo "Pending" ?>
+                    </strong>
+                    <?php } ?>
+                </div>
+                
+                <?php
+            }
+            ?>        
             <?php
         }
-        ?>        
-        <?php
     }
-}
-?>
+    ?>
 </section>
 <!-- /Content -->
 
 <!--Footer -->
-<?php include( 'includes/footer.php' );
-?>
+<?php include( 'includes/footer.php' ); ?>
 <!-- /Footer-->
 
 <!--Back to top-->
 <div id = 'back-top' class = 'back-top'>
-<a href = '#top'>
-<i class = 'fa fa-angle-up' aria-hidden = 'true'></i>
-</a>
+    <a href = '#top'>
+     <i class = 'fa fa-angle-up' aria-hidden = 'true'></i>
+    </a>
 </div>
 <!--/Back to top-->
 
 <!--Login-Form -->
-<?php include( 'includes/login.php' );
-?>
+<?php include( 'includes/login.php' ); ?>
 <!--/Login-Form -->
 
 <!--Register-Form -->
-<?php include( 'includes/registration.php' );
-?>
+<?php include( 'includes/registration.php' ); ?>
 <!--/Register-Form -->
 
 <!--Forgot-password-Form -->
-<?php include( 'includes/forgotpassword.php' );
-?>
+<?php include( 'includes/forgotpassword.php' ); ?>
 
 <script src = 'assets/js/jquery.min.js'></script>
 

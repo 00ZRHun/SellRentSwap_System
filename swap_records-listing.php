@@ -1,8 +1,7 @@
 <?php
-session_start();
-include('includes/config.php');
-error_reporting(0);
-
+    session_start();
+    include('includes/config.php');
+    error_reporting(0);
 ?>
 
 <!DOCTYPE HTML>
@@ -61,7 +60,7 @@ error_reporting(0);
     <section style='min-height: 100vh;' class='container'>
 
         <?php
-        $user_sql = 'SELECT id FROM tblusers WHERE EmailId=:email';
+        $user_sql = 'SELECT id, FullName FROM tblusers WHERE EmailId=:email';
         $user_query = $dbh->prepare($user_sql);
         $user_query->bindParam(':email', $_SESSION['login'], PDO::PARAM_STR);
         $user_query->execute();

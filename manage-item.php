@@ -1,4 +1,4 @@
-<?php
+ <?php
 	session_start();
 	error_reporting(0);
 	include('includes/config.php');
@@ -9,8 +9,18 @@
 	}
 	else
 	{ 
+		if(isset($_REQUEST['del'])){
+			$delid=intval($_GET['del']);
+			// $sql = "delete from tblvehicles SET id=:status WHERE id=:delid";
+			$sql = "UPDATE tblpostitem SET delmode=1 WHERE id=:delid";
+			$query = $dbh->prepare($sql);
+			$query -> bindParam(':delid',$delid, PDO::PARAM_STR);
+			$query -> execute();
+			$msg="Item record deleted successfully";
+		}
+
 		// insert data into tblpostitem
-		if(isset($_POST['submit']))
+		/* if(isset($_POST['submit']))
 		{
 			$userId=$_POST['userId'];
 			$productName=$_POST['productName'];
@@ -67,7 +77,7 @@
 				$error="Something went wrong. Please try again" . $userId . $sql;
 			}
 
-		}
+		} */
 ?>
 
 <!doctype html>
@@ -168,239 +178,149 @@
 		<div class="container">
 			<div class="page-header_wrap">
 			<div class="page-heading">
-				<h1>Post Item</h1>
+				<h1>Manage Item</h1>
 			</div>
 			<ul class="coustom-breadcrumb">
 				<li><a href="index.php">Home</a></li>
-				<li>Post Item</li>
+				<li>Manage Item</li>
 			</ul>
 			</div>
 		</div>
+
 		<!-- Dark Overlay-->
 		<div class="dark-overlay"></div>
 	</section>
-	<!-- /Page Header--> 
+	<!--/Page Header--> 
 
 	<!-- Body -->
 	<div class="ts-main-content section-padding">
+		<!-- <div class="content-wrapper"> -->
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-							<!-- <div class="section-header text-center">
-								<h2 class="">Post Item</h2>
-							</div> -->
+						<h2 class="page-title">Manage Items</h2>
+
+						<!-- Zero Configuration Table -->
+						<!-- <div class="panel panel-default"> -->
+						<div class="row">
+							<div class="panel-heading">Item Details</div>
 							
-							<!-- form 1( basic info ) -->
-							<div class="row">
-								<div class="col-md-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">Basic Info</div>
+							<div class="panel-body">
+								<!-- notify( success/fail ) -->
+								<?php 
+										if($error){
+									?>
+										<div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?></div>
+									<?php 
+										} else if($msg){
+									?>
+										<div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?></div>
+									<?php 
+										}
+								?>
 
-											<!-- notification( htmlentities ) -->
-											<?php 
-												if($error){
-													?>
-													<div class="errorWrap">
-														<strong>ERROR</strong>:<?php echo htmlentities($error); ?>
-													</div>
-													<?php 
-												} 
-												if($msg){
-													?>
-													<div class="succWrap">
-														<strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?>
-													</div>
-													<?php
-												}	
-											?>
+								<!-- table -->
+								<table id="zctb" class="text-center display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+									<!-- table header -->
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Product</th>
+											<!-- <th>Image</th> -->
+											<th>Used Years</th>
+											<th>Overview</th>
+											<!-- <th>SELL - Total Price(RM)</th>
+											<th>RENT - Price/Day(RM)</th>
+											<th>SWAP - Value</th> -->
+											<th>Total Price(RM)</th>
+											<th>Price/Day(RM)</th>
+											<th>Value</th>
+											<th>PayPal Business Account</th>
+											<th>Contact Nombor</th>
+											<!-- <td>Updation Date</td> -->
+											<th>Action</th>
+										</tr>
+									</thead>
 
-											<div class="panel-body">
+									<!-- table footer -->
+									<tfoot>
+										<tr>
+											<th>#</th>
+											<th>Product</th>
+											<!-- <th>Image</th> -->
+											<th>Used Years</th>
+											<th>Overview</th>
+											<th>Total Price(RM)</th>
+											<th>Price/Day(RM)</th>
+											<th>Value</th>
+											<th>PayPal Business Account</th>
+											<th>Contact Nombor</th>
+											<!-- <td>Updation Date</td> -->
+											<th>Action</th>
+										</tr>
+										</tr>
+									</tfoot>
+									<tbody>
 
-												<!-- form start -->
-												<form method="post" class="form-horizontal" enctype="multipart/form-data">
-												<!-- Post A Vehicle -->
-													<!-- row 1 -->
-													<div class="form-group">
-														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
-															<input type="text" name="productName" id="productName" class="form-control" required>
-														</div>
+									<!-- table body -->
+										<!-- get data from( tblvehiclestbl, brands ) -->
+									<?php 
+										/* $sql = 
+											"SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id 
+											from tblvehicles 
+											join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand"; */
+										$sql = "SELECT * FROM tblpostitem WHERE delmode=0 ORDER BY updationDate ASC";
+										
+										echo $id;
 
-														<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<input type="number" name="usedYear" id="usedYear" class="form-control" required>
-														</div>
+										$query = $dbh -> prepare($sql);
+										$query->execute();
+										$results=$query->fetchAll(PDO::FETCH_OBJ);
+										$cnt=1;
+										
+										if($query->rowCount() > 0){
+											foreach($results as $result){
+									?>
+										<!-- html -->
+									<tr>
+										<td><?php echo htmlentities($cnt);?></td>
+										<!-- <td><?php echo htmlentities($result->productName);?></td> -->
+										<!-- <td><?php echo htmlentities($result->Vimage1);?></td> -->
+										<td>
+											<?php echo htmlentities($result->productName);?>
+											<img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image">
+										</td>
+										<td><?php echo htmlentities($result->usedYear);?></td>
+										<td><?php echo htmlentities(substr($result->overview, 0,70));?></td>
+										<td><?php echo htmlentities($result->totalPrice);?></td>
+										<td><?php echo htmlentities($result->pricePerDay);?></td>
+										<td><?php echo htmlentities($result->value);?></td>
+										<td><?php echo htmlentities($result->payPalBusinessAccount);?></td>
+										<td><?php echo htmlentities($result->contactNo);?></td>
+										<!-- <td><?php echo htmlentities($result->updationDate);?></td> -->
+										<td>
+											<a href="edit-item.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+											<a href="manage-item.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a>
+										</td>
+									</tr>
 
-														<!-- <label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<select name="brandname" required>
-																<option value=""> Select </option>
-																<?php 
-																	$ret="select id,BrandName from tblbrands";
-																	$query= $dbh -> prepare($ret);
-																	//$query->bindParam(':id',$id, PDO::PARAM_STR);
-																	$query-> execute();
-																	$results = $query -> fetchAll(PDO::FETCH_OBJ);
-																	if($query -> rowCount() > 0)
-																	{
-																		foreach($results as $result)
-																		{
-																	?>
-																	<option value="<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->BrandName);?></option>
-																<?php
-																		}
-																	} 
-																?>
-															</select>
-														</div> -->
-													</div>
-													<!-- row 2 -->
-													<div class="form-group">
-														<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
-														<div class="col-sm-10">
-															<textarea class="form-control" name="overview" id="overview" rows="3" required></textarea>
-														</div>
-													</div>
-													<!-- row 3 -->
-													<div class="form-group">
-														<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
-														<div class="col-sm-2">
-															<input type="number" name="totalPrice" id="totalPrice" class="form-control" required>
-														</div>
-
-														<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
-														<div class="col-sm-2">
-															<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" required>
-														</div>
-
-														<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
-														<div class="col-sm-2">
-															<input type="number" name="value" id="value" class="form-control" required>
-														</div>
-
-														<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<select name="fueltype" required>
-																<option value=""> Select </option>
-																<option value="Petrol">Petrol</option>
-																<option value="Diesel">Diesel</option>
-																<option value="CNG">CNG</option>
-															</select>
-														</div> -->
-													</div>
-													<!-- row 4 -->
-													<div class="form-group">
-														<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" required>
-														</div>
-
-														<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
-														<div class="col-sm-4">
-															<input type="number" name="contactNo" id="contactNo" class="form-control" required>
-														</div>
-													</div>
-
-													<div class="hr-dashed"></div>
-
-												<!-- image -->
-													<!-- row 1( subtitle ) -->
-													<div class="form-group">
-														<div class="col-sm-12">
-															<h4><b>Upload Images</b></h4>
-														</div>
-													</div>
-													<!-- row 2( upload image ) -->
-													<div class="form-group">
-														<div class="col-sm-4">
-															Image 1
-															<span style="color:red">*</span>
-															<input type="file" name="img1" required>
-														</div>
-														<div class="col-sm-4">
-															Image 2
-															<input type="file" name="img2">
-														</div>
-														<div class="col-sm-4">
-															Image 3
-															<input type="file" name="img3">
-														</div>
-													</div>
-													<!-- row 3( upload image ) -->
-													<div class="form-group">
-														<div class="col-sm-4">
-															Image 4
-															<input type="file" name="img4">
-														</div>
-														<div class="col-sm-4">
-															Image 5
-															<input type="file" name="img5">
-														</div>
-													</div>
-
-													<div class="hr-dashed"></div>
-
-										</div>
-									</div>
-								</div>
+										<?php $cnt=$cnt+1; }} ?>
+										
+									</tbody>
+								</table>						
 							</div>
-								
-							<!-- form 2( accessories ) -->
-							<div class="row">
-								<div class="col-md-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">Category</div>
-											<div class="panel-body">
-
-												<!-- Accessories -->
-													<!-- row 1 -->
-												<div class="form-group">
-													<div class="col-sm-4">
-														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="sell" name="sell" value="1">
-														<label for="sell">sell</label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="rent" name="rent" value="1">
-														<label for="rent">rent</label>
-														</div>
-													</div>
-													<div class="col-sm-4">
-														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="swap" name="swap" value="1">
-														<label for="swap">swap</label>
-														</div>
-													</div>
-
-
-												<!-- <div class="hr-dashed"></div> -->
-												<br><br><br>
-
-												<!-- Cancel & Save btn -->
-												<div class="form-group text-center">
-													<div class="col-sm-8 col-sm-offset-2">
-														<button class="btn btn-default" type="reset">Cancel</button>
-														<button class="btn btn-primary" name="submit" type="submit">Save changes</button>
-													</div>
-												</div>
-												
-												<!-- form end -->
-												</form>
-
-										</div>
-									</div>
-								</div>
-							</div>							
-						</div>
+						</div>					
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!--  -->
+	<!--  -->
+	<!--  -->
+	
 	<!-- /Body -->
 
 	<!-- Cancel & Save btn -->
@@ -423,7 +343,6 @@
 		<script src="js/chartData.js"></script>
 		<script src="js/main.js">
 	</script>
-
 
 	<!--Footer -->
 	<?php include('includes/footer.php');?>
@@ -448,14 +367,22 @@
 
 	<!-- Scripts --> 
 	<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/bootstrap.min.js"></script> 
-		<script src="assets/js/interface.js"></script> 
-		<!--Switcher-->
-		<script src="assets/switcher/js/switcher.js"></script>
-		<!--bootstrap-slider-JS--> 
-		<script src="assets/js/bootstrap-slider.min.js"></script> 
-		<!--Slider-JS--> 
-		<script src="assets/js/slick.min.js"></script> 
+	<script src="js/bootstrap-select.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script> 
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/Chart.min.js"></script>
+	<script src="js/fileinput.js"></script>
+	<script src="js/chartData.js"></script>
+	<script src="js/main.js"></script>
+
+	<script src="assets/js/interface.js"></script> 
+	<!--Switcher-->
+	<script src="assets/switcher/js/switcher.js"></script>
+	<!--bootstrap-slider-JS--> 
+	<script src="assets/js/bootstrap-slider.min.js"></script> 
+	<!--Slider-JS--> 
+	<script src="assets/js/slick.min.js"></script> 
 	<script src="assets/js/owl.carousel.min.js"></script>
 
 </body>

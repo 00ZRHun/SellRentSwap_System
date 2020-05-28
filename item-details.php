@@ -78,7 +78,6 @@
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
 </head>
 <body>
 
@@ -98,7 +97,7 @@
    from tblvehicles join tblbrands
    on tblbrands.id=tblvehicles.VehiclesBrand
    where tblvehicles.id=:vhid"; */
-  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=1";
+  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=0";
   $query = $dbh -> prepare($sql);
   $query->bindParam(':vhid',$vhid, PDO::PARAM_STR);
   $query->execute();
@@ -110,8 +109,8 @@
     {  
       $_SESSION['brndid']=$result->bid;  
       $providerID = $result->user_id; 
-?>  
-
+?>
+<h1></h1>  
 <section id="listing_img_slider">
   <div><?= $providerID ?></div>
   <div><img src="img/itemImages/<?php echo htmlentities($result->Vimage1);?>" class="img-responsive" alt="image" width="900" height="560"></div>
@@ -487,7 +486,7 @@
               <div role="tabpanel" class="tab-pane" id="swap">                
                 <p>         
                   <?php
-                  $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+                  $user_sql = "SELECT id, FullName FROM tblusers WHERE EmailId=:email";        
                   $user_query = $dbh->prepare($user_sql);
                   $user_query->bindParam(':email', $email, PDO::PARAM_STR);
                   $user_query->execute();
@@ -506,7 +505,10 @@
                     $query->execute();
                     $results = $query->fetchAll(PDO::FETCH_OBJ);                      
                     ?>
-                    <h2>Item you have:</h2>
+
+
+
+                    <h2>Item you have:<?= $user_results["id"]; ?></h2>
                     <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
                     <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
                     <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">

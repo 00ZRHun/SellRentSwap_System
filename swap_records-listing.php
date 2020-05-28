@@ -85,17 +85,18 @@
 
             // Provider's item data
             $sql = "SELECT item.productName, sr.receiver_id, sr.status
-            FROM tblpostitem as item
-            JOIN swap_records as sr
-            ON sr.user_id = item.user_id
-            WHERE item.user_id = :user_id";
+                    FROM swap_records as sr
+                    JOIN tblpostitem as item
+                    ON item.id = sr.item_id
+                    WHERE sr.provider_id = :user_id";            
 
             $query = $dbh->prepare($sql);
             $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
             $query->execute();
             $results = $query->fetchAll(PDO::FETCH_OBJ);
             
-            foreach ($results as $result) {
+            foreach ($results as $result) {   
+                
                 // Receiver item data
                 $sql = "SELECT item.productName as receiverItemName, user.FullName as receiverName
                         FROM tblpostitem as item
@@ -123,7 +124,7 @@
                 }
             }
             
-        } elseif ($query2->rowCount() > 0) {                
+        } if ($query2->rowCount() > 0) {                
 
                 // As Receiver
 

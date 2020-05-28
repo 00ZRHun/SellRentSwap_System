@@ -19,7 +19,7 @@
             SET status=:status
             WHERE provider_id=:provider_id AND id=:swap_request_id";    
 
-    $request_sql = "SELECT * FROM swap_requests WHERE id=:swap_request_id";
+    $request_sql = "SELECT * FROM swap_requests WHERE id=:swap_request_id";    
     $insert_record_sql = "INSERT INTO swap_records(user_id, item_id, receiver_id, provider_id, receiver_item_id, status) 
                           VALUES (:user_id, :item_id, :receiver_id, :provider_id, :receiver_item_id, :status)";
 
@@ -47,7 +47,19 @@
         $newquery->bindParam(':item_id', intval($row_result["item_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':status', intval($row_result["status"]), PDO::PARAM_INT); // 0 pending, 1 accept, -1 reject
         $newquery->execute();
-    
+
+        // Update item delmode
+        $update_item_sql = "UPDATE tblpostitem SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
+        $delmode = 0;
+        $item_id = $row_result["item_id"];
+
+        $update_query = $dbh->prepare($update_item_sql);
+        $update_query->bindParam(':delmode', $delmode);
+        $update_query->bindParam(':item_id', $item_id);
+        $update_query->bindParam(':receiver_item_id', $row_result["receiver_item_id"]);
+        $update_query->execute();
+        
+
         echo json_encode(['code' => 200, 'msg' => "Success"]);
     } catch(exception $e) {
         echo json_encode(['code' => 400, 'msg' => "Error"]);

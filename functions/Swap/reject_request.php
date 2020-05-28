@@ -44,7 +44,7 @@
         $newquery->bindParam(':provider_id', intval($row_result["provider_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':item_id', intval($row_result["item_id"]), PDO::PARAM_INT);
         $newquery->bindParam(':status', intval($row_result["status"]), PDO::PARAM_INT); // 0 pending, 1 accept, -1 reject
-        $newquery->execute();
+        $newquery->execute();        
     
         echo json_encode(['code' => 200, 'msg' => "Success"]);
     } catch(exception $e) {

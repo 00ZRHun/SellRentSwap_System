@@ -1,7 +1,8 @@
 <?php
-    session_start();
-    include('includes/config.php');
-    error_reporting(0);
+session_start();
+include('includes/config.php');
+error_reporting(0);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -60,7 +61,7 @@
     <section style='min-height: 100vh;' class='container'>
 
         <?php
-        $user_sql = 'SELECT id, FullName FROM tblusers WHERE EmailId=:email';
+        $user_sql = 'SELECT id FROM tblusers WHERE EmailId=:email';
         $user_query = $dbh->prepare($user_sql);
         $user_query->bindParam(':email', $_SESSION['login'], PDO::PARAM_STR);
         $user_query->execute();
@@ -78,42 +79,33 @@
         $query2 = $dbh->prepare($receiver_sql);
         $query2->bindParam(":user_id", $user_id);
         $query2->execute();
-        // $results = $query->fetchAll( PDO::FETCH_OBJ );
+        
+
         if ($query->rowCount() > 0) {
 
             // As Provider
 
-            // Provider's item data
-            $sql = "SELECT item.productName, sr.receiver_id, sr.status
-                    FROM swap_records as sr
-                    JOIN tblpostitem as item
-                    ON item.id = sr.item_id
-                    WHERE sr.provider_id = :user_id";            
-
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-            $query->execute();
-            $results = $query->fetchAll(PDO::FETCH_OBJ);
+            require("./functions/Swap/get_swap_records.php");
+            require("./functions/User/user.php");
+            require("./functions/Item/item.php");
             
-            foreach ($results as $result) {   
-                
-                // Receiver item data
-                $sql = "SELECT item.productName as receiverItemName, user.FullName as receiverName
-                        FROM tblpostitem as item
-                        JOIN swap_records as sr
-                        ON sr.receiver_item_id = item.id
-                        JOIN tblusers as user
-                        ON item.user_id = user.id
-                        WHERE sr.receiver_id = :receiver_id";
-                        
-                $query = $dbh->prepare($sql);                
-                $query->bindParam(':receiver_id', $result->receiver_id, PDO::PARAM_STR);
-                $query->execute();
-                $receiver_results = $query->fetchAll(PDO::FETCH_OBJ);
-                
-                foreach ($receiver_results as $r_r) {
-                    ?>
-                    <p><?php echo htmlentities($r_r->receiverName) ?> wants to swap <?php echo htmlentities($result->productName) ?> with <?php echo htmlentities($r_r->receiverItemName) ?></p>
+            $results = get_records_as_provider($user_id);
+            
+            foreach ($results as $result) {                                   
+
+                $receiver_item_ids = explode(", ", $result->receiver_item_id);
+                $receiver_item_names = "";                
+
+                foreach ($receiver_item_ids as $id) {
+                    $item = get_item_detail($id, $result->receiver_id);
+                    $receiver_item_names .= $item["productName"] . " ";
+                }                
+
+                $current_receiver = get_user_detail($result->receiver_id);
+                $current_receiver_name = $current_receiver["FullName"];
+                                            
+                ?>
+                    <p style="margin-bottom: 0; margin-top: 1em">RES:<?php echo htmlentities($current_receiver_name) ?> wants to swap <?php echo htmlentities($result->itemName) ?> with <?php echo htmlentities($receiver_item_names) ?></p>
                     <?php if ($result->status == -1) {
                         echo "You rejected this request.";
                     } ?>
@@ -121,43 +113,37 @@
                         echo "You accepted this request.";
                     } ?>
             <?php
-                }
+                
             }
             
         } if ($query2->rowCount() > 0) {                
 
                 // As Receiver
 
-                // Receiver's item data                
-                $sql = "SELECT item.productName, sr.receiver_id, sr.provider_id, sr.status
-                        FROM tblpostitem as item
-                        JOIN swap_records as sr
-                        ON sr.receiver_item_id = item.id
-                        WHERE sr.receiver_id = :user_id";
-                
-                $query = $dbh->prepare($sql);
-                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                $query->execute();
-                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                require("./functions/Swap/get_swap_records.php");
+                require("./functions/User/user.php");
+                require("./functions/Item/item.php");
+                              
+                $results = get_records_as_receiver($user_id);
 
-                foreach ($results as $result) {
-                    // Provider item data
-                    $sql = "SELECT item.productName as providerItemName, user.FullName as providerName
-                    FROM tblpostitem as item
-                    JOIN swap_records as sr
-                    ON sr.item_id = item.id
-                    JOIN tblusers as user
-                    ON item.user_id = user.id
-                    WHERE sr.provider_id = :provider_id";
+                foreach ($results as $result) {     
                     
-                    $query = $dbh->prepare($sql);
-                    $query->bindParam(':provider_id', $result->provider_id, PDO::PARAM_STR);
-                    $query->execute();
-                    $provider_results = $query->fetchAll(PDO::FETCH_OBJ);
+                    $receiver_item_ids = explode(", ", $result->receiver_item_id);
+                    $receiver_item_names = "";                                               
 
-                    foreach ($provider_results as $p_r) {
-                        ?>
-                    <p>You want to swap your <?php echo htmlentities($result->productName) ?> with <?php echo htmlentities($p_r->providerName) ?>'s <?php echo htmlentities($p_r->providerItemName) ?></p>
+                    $provider_item = get_item_detail($result->item_id, $result->provider_id);
+                    $provider_item_name = $provider_item["productName"];                    
+
+                    foreach ($receiver_item_ids as $id) {
+                        $item = get_item_detail($id, $result->receiver_id);
+                        $receiver_item_names .= $item["productName"] . " ";
+                    }                
+
+                    $current_provider = get_user_detail($result->provider_id);
+                    $current_provider_name = $current_provider["FullName"];
+
+                ?>
+                    <p style="margin-bottom: 0; margin-top: 1em">REQ: You want to swap your <?php echo htmlentities($receiver_item_names) ?> with <?php echo htmlentities($current_provider_name) ?>'s <?php echo htmlentities($provider_item_name) ?></p>
                     <?php if ($result->status == -1) {
                             echo "Your swap request is rejected.";
                         } ?>
@@ -165,7 +151,7 @@
                             echo "Your swap request is accepted.";
                         } ?>
             <?php
-                    }
+                    
                 }
             }
             ?>

@@ -55,12 +55,12 @@
             $update_item_sql = "UPDATE tblpostitem SET delmode=:delmode WHERE id=:item_id OR id=:receiver_item_id";
             $delmode = 0;
 
-            $item_id = $id;
+            $item_id = $row_result["item_id"];
 
             $update_query = $dbh->prepare($update_item_sql);
             $update_query->bindParam(':delmode', $delmode);
             $update_query->bindParam(':item_id', $item_id);
-            $update_query->bindParam(':receiver_item_id', $row_result["receiver_item_id"]);
+            $update_query->bindParam(':receiver_item_id', $id);
             $update_query->execute();
         }                                                        
 

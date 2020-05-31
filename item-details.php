@@ -99,7 +99,7 @@ item-details.php
    from tblvehicles join tblbrands
    on tblbrands.id=tblvehicles.VehiclesBrand
    where tblvehicles.id=:vhid"; */
-  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=0";
+  $sql = "SELECT * from tblpostitem where id=:vhid AND delmode=1";
   $query = $dbh -> prepare($sql);
   $query->bindParam(':vhid',$vhid, PDO::PARAM_STR);
   $query->execute();
@@ -496,14 +496,18 @@ item-details.php
 
                   $user_id = $user_results["id"];
                   
+                  $item_status = 1;
+                  
                   $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
                           FROM tblpostitem as item 
                           JOIN tblusers as user
                           ON item.user_id = user.id
-                          WHERE user_id = :user_id";
+                          WHERE user_id = :user_id AND item.delmode = :item_status";
                     
                     $query = $dbh->prepare($self_items_sql);
                     $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                    $query->bindParam(':item_status', $item_status);
+
                     $query->execute();
                     $results = $query->fetchAll(PDO::FETCH_OBJ);                      
                     ?>
@@ -514,15 +518,16 @@ item-details.php
                     <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
                     <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
                     <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
-                    <select name="receiver_item_id" id="receiver_item_id">
+                                        
                       <?php
                       foreach ($results as $result) {                      
                       ?>
-                        <option style="background: #346BE0; color: white; padding: 2em; border-radius: 15px;" value="<?php echo htmlentities($result->itemID) ?>"><?php echo htmlentities($result->productName) ?></option>
+                        <input type="checkbox" name="receiver_item_id" id="<?php echo htmlentities($result->productName) ?>" value="<?php echo htmlentities($result->itemID) ?>" id="" /> 
+                        <label for="<?php echo htmlentities($result->productName) ?>"><?php echo htmlentities($result->productName) ?></label><br />
                       <?php
                       }
                       ?>
-                    </select>                    
+                    
                   <button id="swap-with-owner-btn">Swap with owner</button>
                 </p>
               </div>

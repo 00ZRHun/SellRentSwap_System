@@ -29,28 +29,21 @@
             <!-- status( login/register ) -->
             <?php   
                 if(strlen($_SESSION['login'])==0){	
-            ?>
-              <div class="login_btn">
-                <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
-                  Login / Register
-                  <?php
-                    $email=$_SESSION['login'];
-                    // echo "</br>".$email;
-                  ?>
-                </a>
-              </div>
-            <?php
-              }else{ 
-            
-                // echo "Welcome To Item SellRentSwap System portal";
-                echo "Welcome To Item System portal";
-                // echo "Welcome To"."<br>"."Item SellRentSwap System portal";
-                // echo "Welcome To \n\t Item SellRentSwap System portal";
-                /* $email=$_SESSION['login'];
-                echo "</br>".$email."abc"; */
-            ?>
-            
-            <?php
+              ?>
+                <div class="login_btn">
+                  <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">
+                    Login / Register
+                    <?php
+                      $email=$_SESSION['login'];
+                      // echo "</br>".$email;
+                    ?>
+                  </a>
+                </div>
+              <?php
+                }else{ 
+                  echo "Welcome To Car rental portal";
+                  /* $email=$_SESSION['login'];
+                  echo "</br>".$email."abc"; */
               } 
             ?>
           </div>
@@ -75,18 +68,9 @@
 
       <div class="header_wrap">
         <div class="user_login">
-          <ul>
-            <li class="dropdown">
-              <?php if(!$_SESSION['login']){ ?>
-                <ul>
-                  <li class="dropdown">
-                    <a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-user-circle" aria-hidden="true"></i> 
-                      LOGIN
-                    </a>
-                  </li>
-                </ul>
-              <?php }else{ ?>
+          <?php if($_SESSION['login']){?>
+            <ul>
+              <li class="dropdown">
                 <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-user-circle" aria-hidden="true"></i> 
                   <?php 
@@ -97,7 +81,12 @@
                     $query-> execute();
                     $results=$query->fetchAll(PDO::FETCH_OBJ);
 
+                    // $id = $results->id;
+                    // echo $results->id;
                     $id = 100;
+                    // echo $results->id;
+                    // echo "ancad";
+                    // echo $email;
 
                     if($query->rowCount() > 0)
                     {
@@ -117,18 +106,36 @@
 
                 <!-- dropdown menu( login/- ) -->
                 <ul class="dropdown-menu">
-                  <li><a href="profile.php">Profile Settings</a></li>
-                  <li><a href="update-password.php">Update Password</a></li>
-                  <li><a href="my-booking.php">My Booking</a></li>
-                  <li><a href="post-testimonial.php">Post a Testimonial</a></li>
-                  <li><a href="my-testimonials.php">My Testimonial</a></li>
-                  <li><a href="swap_request.php">Requests</a></li>
-                  <li><a href="swap_records-listing.php">Records</a></li>                  
-                  <li><a href="logout.php">Sign Out</a></li>                  
+                  <?php if($_SESSION['login']){?>
+                    <li><a href="profile.php">Profile Settings</a></li>
+                    <li><a href="update-password.php">Update Password</a></li>
+                    <li><a href="my-booking.php">My Booking</a></li>
+                    <li><a href="post-testimonial.php">Post a Testimonial</a></li>
+                    <li><a href="my-testimonials.php">My Testimonial</a></li>
+                    <li><a href="swap_request.php">Requests</a></li>
+                    <li><a href="swap_records-listing.php">Records</a></li>                  
+                    <li><a href="logout.php">Sign Out</a></li>                  
+                  <?php } else { ?>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>
+                    <!-- <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Profile Settings</a></li>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Update Password</a></li>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">My Booking</a></li>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Post a Testimonial</a></li>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">My Testimonial</a></li>
+                    <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Sign Out</a></li> -->
+                  <?php } ?>
                 </ul>
-              <?php } ?> 
-            </li>
-          </ul>
+              </li>
+            </ul>
+          <?php }else{ ?>
+            <ul>
+              <li class="dropdown">
+                  <a href="#loginform" data-toggle="modal" data-dismiss="modal" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i> 
+                  </a>
+              </li>
+            </ul>
+          <?php } ?>
         </div>
 
         <!-- search( icon & textbox ) -->
@@ -163,7 +170,7 @@
             <!-- dropdown menu( login/- ) -->
             <ul class="dropdown-menu">
               <?php if($_SESSION['login']){?>
-                <li><a href="post-item.php">Post Item</a></li>
+                <li><a href="post-item.php">Post Item Settings</a></li>
                 <li><a href="manage-item.php">Manage Item</a></li>              
               <?php } else { ?>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>

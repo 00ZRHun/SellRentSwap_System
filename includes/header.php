@@ -163,7 +163,7 @@
             <!-- dropdown menu( login/- ) -->
             <ul class="dropdown-menu">
               <?php if($_SESSION['login']){?>
-                <li><a href="post-item.php">Post Item Settings</a></li>
+                <li><a href="post-item.php">Post Item</a></li>
                 <li><a href="manage-item.php">Manage Item</a></li>              
               <?php } else { ?>
                 <li><a href="#loginform"  data-toggle="modal" data-dismiss="modal">Login</a></li>

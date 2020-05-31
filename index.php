@@ -110,7 +110,8 @@
 
           <?php 
             // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-            $sql = "SELECT * from tblpostitem WHERE delmode=0";
+            $sql = "SELECT * from tblpostitem WHERE delmode=0 ORDER BY updationDate DESC";
+            // $sql = "SELECT * from tblpostitem ORDER BY updationDate DESC";
             $query = $dbh -> prepare($sql);
             $query->execute();
             $results=$query->fetchAll(PDO::FETCH_OBJ);

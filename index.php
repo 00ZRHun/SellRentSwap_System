@@ -54,8 +54,8 @@
       <div class="row">
         <div class="col-md-5 col-md-push-7">
           <div class="banner_content">
-            <h1>Find the right car for you.</h1>
-            <p>We have more than a thousand cars for you to choose. </p>
+            <h1>Find the right item for you.</h1>
+            <p>We have more than a thousand items for you to choose. </p>
             <!-- <a href="page.php" class="btn">Read More <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a> -->
             <a href="page.php?type=aboutus" class="btn">
               Read More
@@ -78,7 +78,7 @@
   <div class="container">
     <!-- row 1( descritption ) -->
     <div class="section-header text-center">
-      <h2>Find the Best <span>CarForYou</span></h2>
+      <h2>Find the Best <span>ItemForYou</span></h2>
       <p>
         There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
       </p>
@@ -94,8 +94,8 @@
               <!-- data-toggle="tab"/"modal" -->
               <!-- <a href="#resentnewcar" role="tab" data-toggle="tab" data-dismiss="tab"> -->
               <!-- <a href="#resentnewcar" role="tab" data-toggle="tab"> -->
-              <a href="#resentnewcar" role="tab" style="cursor:pointer;">
-                New Car
+              <a href="#latestItem" role="tab" style="cursor:pointer;">
+                Latest Item
               </a>
             </li>
           </ul>
@@ -106,11 +106,11 @@
         <!-- Recently Listed New Cars -->
       <div class="tab-content">
         <!-- <div role="tabpanel" class="tab-pane active" id="resentnewcar"> -->
-        <div id="resentnewcar">
+        <div id="latestItem">
 
           <?php 
             // $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-            $sql = "SELECT * from tblpostitem";
+            $sql = "SELECT * from tblpostitem WHERE delmode=0";
             $query = $dbh -> prepare($sql);
             $query->execute();
             $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -263,7 +263,7 @@
         <div class="fun-facts-m">
           <div class="cell">
             <h2><i class="fa fa-car" aria-hidden="true"></i>1200+</h2>
-            <p>New Cars For Sale</p>
+            <p>New Items  For Sale</p>
           </div>
         </div>
       </div>
@@ -271,7 +271,7 @@
         <div class="fun-facts-m">
           <div class="cell">
             <h2><i class="fa fa-car" aria-hidden="true"></i>1000+</h2>
-            <p>Used Cars For Sale</p>
+            <p>Used Items  For Sale</p>
           </div>
         </div>
       </div>

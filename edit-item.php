@@ -8,11 +8,14 @@
 		header('location:index.php');
 	}
 	else
-	{ 
+	{
 		// insert data into tblpostitem
+		$editId = intval($_GET['id']);
+
 		if(isset($_POST['submit']))
 		{
 			$userId=$_POST['userId'];
+			// $productName=$_POST['productName'];
 			$productName=$_POST['productName'];
 			$usedYear=$_POST['usedYear'];
 			$overview=$_POST['overview'];
@@ -21,24 +24,78 @@
 			$value=$_POST['value'];
 			$payPalBusinessAccount=$_POST['payPalBusinessAccount'];
 			$contactNo=$_POST['contactNo'];
+			
+			$sell=$_POST['sell'];
+			$rent=$_POST['rent'];
+			$swap=$_POST['swap'];
+			
+			$vimage1=$_FILES["img1"]["name"];
+			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
+			/* 
 			$vimage1=$_FILES["img1"]["name"];
 			$vimage2=$_FILES["img2"]["name"];
 			$vimage3=$_FILES["img3"]["name"];
 			$vimage4=$_FILES["img4"]["name"];
 			$vimage5=$_FILES["img5"]["name"];
-			$sell=$_POST['sell'];
-			$rent=$_POST['rent'];
-			$swap=$_POST['swap'];
+
 			move_uploaded_file($_FILES["img1"]["tmp_name"],"img/itemImages/".$_FILES["img1"]["name"]);
 			move_uploaded_file($_FILES["img2"]["tmp_name"],"img/itemImages/".$_FILES["img2"]["name"]);
 			move_uploaded_file($_FILES["img3"]["tmp_name"],"img/itemImages/".$_FILES["img3"]["name"]);
 			move_uploaded_file($_FILES["img4"]["tmp_name"],"img/itemImages/".$_FILES["img4"]["name"]);
-			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]);
+			move_uploaded_file($_FILES["img5"]["tmp_name"],"img/itemImages/".$_FILES["img5"]["name"]); */
+			
 
-			$sql="INSERT INTO tblpostitem(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
-			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)";
+			/* $sql="INSERT tblpostitem(user_id, productName,usedYear,overview,totalPrice,pricePerDay,value,payPalBusinessAccount,contactNo,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,sell,rent,swap)
+			 VALUES(:userId,:productName,:usedYear,:overview,:totalPrice,:pricePerDay,:value,:payPalBusinessAccount,:contactNo,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:sell,:rent,:swap)"; */
+/* 			 $sql=
+			 	"UPDATE tblpostitem 
+SET 
+user_id = 7, productName = ":productName", usedYear = 9, overview = ":overview", totalPrice = 19, pricePerDay = 19, value = 19, payPalBusinessAccount = "payPalBusinessAccount@gmail.com", contactNo = "123123123123", Vimage1 = ":Vimage1", Vimage2 = ":Vimage2", Vimage3 = ":Vimage3", Vimage4 = ":Vimage4", Vimage5 = ":Vimage5", sell = 1, rent = 1, swap = 1 WHERE id=10"; */
+			 
+			/* $sql=
+			 	"UPDATE tblpostitem
+				 SET user_id = :user_id, 
+				 productName = :productName
+				 usedYear = :usedYear,
+				 overview = :overview,
+
+				 totalPrice = :totalPrice,
+				 pricePerDay = :pricePerDay,
+				 value = :value,
+				 payPalBusinessAccount = :payPalBusinessAccount,
+				 contactNo = :contactNo,
+				 Vimage1 = :Vimage1,
+				 Vimage2 = :Vimage2,
+				 Vimage3 = :Vimage3,
+				 Vimage4 = :Vimage4,
+				 Vimage5 = :Vimage5,
+				 sell = :sell,
+				 rent = :rent,
+				 swap = :swap
+				 WHERE id=:editId";  */
+			/*  $sql=
+			 	"UPDATE tblpostitem
+				 SET user_id = :user_id, 
+				 productName = :productName
+				 WHERE id=:editId"; */
+				 $sql=
+					"UPDATE tblpostitem
+					SET
+					productName = :productName,
+					usedYear = :usedYear,
+					overview = :overview,
+					totalPrice = :totalPrice,
+					pricePerDay = :pricePerDay,
+					value = :value,
+					payPalBusinessAccount = :payPalBusinessAccount,
+				 	contactNo = :contactNo,
+					Vimage1 = :Vimage1,
+					sell = :sell,
+					rent = :rent,
+					swap = :swap
+					WHERE id=:id";
 			$query = $dbh->prepare($sql);
-			$query->bindParam(':userId',$userId,PDO::PARAM_STR);
+			
 			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
 			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
 			$query->bindParam(':overview',$overview,PDO::PARAM_STR);
@@ -47,17 +104,28 @@
 			$query->bindParam(':value',$value,PDO::PARAM_STR);
 			$query->bindParam(':payPalBusinessAccount',$payPalBusinessAccount,PDO::PARAM_STR);
 			$query->bindParam(':contactNo',$contactNo,PDO::PARAM_STR);
-			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
-			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
-			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
-			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
-			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
 			$query->bindParam(':sell',$sell,PDO::PARAM_STR);
 			$query->bindParam(':rent',$rent,PDO::PARAM_STR);
 			$query->bindParam(':swap',$swap,PDO::PARAM_STR);
 			
+			$query->bindParam(':vimage1',$vimage1,PDO::PARAM_STR);
+			/* $query->bindParam(':userId',$userId,PDO::PARAM_STR);
+			$query->bindParam(':productName',$productName,PDO::PARAM_STR);
+			$query->bindParam(':usedYear',$usedYear,PDO::PARAM_STR);
+			$query->bindParam(':vimage2',$vimage2,PDO::PARAM_STR);
+			$query->bindParam(':vimage3',$vimage3,PDO::PARAM_STR);
+			$query->bindParam(':vimage4',$vimage4,PDO::PARAM_STR);
+			$query->bindParam(':vimage5',$vimage5,PDO::PARAM_STR);
+			*/
+			// $query->bindParam(':editId',$editId,PDO::PARAM_STR);
+			$query->bindParam(':id',$editId,PDO::PARAM_STR);
+			
 			$query->execute();
-			$lastInsertId = $dbh->lastInsertId();
+
+			// $msg="Item record updated successfully".$sql.$userId.$productName.$editId.$query->execute();
+			// $msg="Item record updated successfully".$sql.$productName.$editId;
+			$msg="Item record updated successfully";
+			/* $lastInsertId = $dbh->lastInsertId();
 			if($lastInsertId)
 			{
 				$msg="Item posted successfully";
@@ -65,7 +133,7 @@
 			else 
 			{
 				$error="Something went wrong. Please try again" . $userId . $sql;
-			}
+			} */
 
 		}
 ?>
@@ -163,33 +231,16 @@
 	<?php include('includes/header.php');?>
 	<!-- /Header --> 
 
-	<!--Page Header-->
-	<section class="page-header contactus_page">
-		<div class="container">
-			<div class="page-header_wrap">
-			<div class="page-heading">
-				<h1>Post Item</h1>
-			</div>
-			<ul class="coustom-breadcrumb">
-				<li><a href="index.php">Home</a></li>
-				<li>Post Item</li>
-			</ul>
-			</div>
-		</div>
-		<!-- Dark Overlay-->
-		<div class="dark-overlay"></div>
-	</section>
-	<!-- /Page Header--> 
-
 	<!-- Body -->
-	<div class="ts-main-content section-padding">
+	<br>
+	<div class="ts-main-content" style="margin-top:10">
 		<div class="container">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-							<!-- <div class="section-header text-center">
-								<h2 class="">Post Item</h2>
-							</div> -->
+							<div class="text-center">
+								<h2 class="">Edit Item</h2>
+							</div>
 							
 							<!-- form 1( basic info ) -->
 							<div class="row">
@@ -216,6 +267,38 @@
 											?>
 
 											<div class="panel-body">
+											
+											<?php
+												$item_sql = "SELECT * FROM tblpostitem WHERE id=:id";        
+												$item_query = $dbh->prepare($item_sql);
+												$item_query->bindParam(':id', $editId, PDO::PARAM_STR);
+												$item_query->execute();
+												$item_results = $item_query->fetch();
+
+												// security
+												// $id = $item_results["user_id"];
+												$productName = $item_results["productName"];
+												$usedYear = $item_results["usedYear"];
+												$overview = $item_results["overview"];
+												$sell = $item_results["sell"];
+												$rent = $item_results["rent"];
+												$swap = $item_results["swap"];
+												$totalPrice = $item_results["totalPrice"];
+												$pricePerDay = $item_results["pricePerDay"];
+												$value = $item_results["value"];
+												$payPalBusinessAccount = $item_results["payPalBusinessAccount"];
+												$contactNo = $item_results["contactNo"];
+												$Vimage1 = $item_results["Vimage1"];
+												$Vimage2 = $item_results["Vimage2"];
+												$Vimage3 = $item_results["Vimage3"];
+												$Vimage4 = $item_results["Vimage4"];
+												$Vimage5 = $item_results["Vimage5"];
+											?>
+
+											<?= $item_sql ?>
+											<?= $editId ?>
+											<?= $item_results["productName"]; ?>
+											<?= $productName ?>
 
 												<!-- form start -->
 												<form method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -224,13 +307,13 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Product Name<span style="color:red">*</span></label>
 														<div class="col-sm-4">
-															<input type="hidden" name="userId" id="userId" class="form-control" required value="<?= $id ?>">
-															<input type="text" name="productName" id="productName" class="form-control" required>
+															<input type="hidden" name="userId" id="userId" class="form-control" value="<?= $id ?>" required>
+															<input type="text" name="productName" id="productName" class="form-control" value="<?= $productName ?>" required>
 														</div>
 
 														<label class="col-sm-2 control-label">Used Year<span style="color:red">*</span></label>
 														<div class="col-sm-4">
-															<input type="number" name="usedYear" id="usedYear" class="form-control" required>
+															<input type="number" name="usedYear" id="usedYear" class="form-control" value="<?= $usedYear ?>" required>
 														</div>
 
 														<!-- <label class="col-sm-2 control-label">Select Brand<span style="color:red">*</span></label>
@@ -260,24 +343,25 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Overview<span style="color:red">*</span></label>
 														<div class="col-sm-10">
-															<textarea class="form-control" name="overview" id="overview" rows="3" required></textarea>
+															<!-- <textarea class="form-control" name="overview" id="overview" rows="3" value="<?= $overview ?>" required></textarea> -->
+															<textarea class="form-control" name="overview" id="overview" rows="3" required><?= $overview ?></textarea>
 														</div>
 													</div>
 													<!-- row 3 -->
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Total Price( RM )<span style="color:red">*</span></label>
 														<div class="col-sm-2">
-															<input type="number" name="totalPrice" id="totalPrice" class="form-control" required>
+															<input type="number" name="totalPrice" id="totalPrice" class="form-control" value="<?= $totalPrice ?>" required>
 														</div>
 
 														<label class="col-sm-2 control-label">Price Per Day( RM )<span style="color:red">*</span></label>
 														<div class="col-sm-2">
-															<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" required>
+															<input type="number" name="pricePerDay" id="pricePerDay" class="form-control" value="<?= $pricePerDay ?>" required>
 														</div>
 
 														<label class="col-sm-2 control-label">Value( RM )<span style="color:red">*</span></label>
 														<div class="col-sm-2">
-															<input type="number" name="value" id="value" class="form-control" required>
+															<input type="number" name="value" id="value" class="form-control" value="<?= $value ?>" required>
 														</div>
 
 														<!-- <label class="col-sm-2 control-label">pricePerDay<span style="color:red">*</span></label>
@@ -294,12 +378,12 @@
 													<div class="form-group">
 														<label class="col-sm-2 control-label">Pay Pal Business Account<span style="color:red">*</span></label>
 														<div class="col-sm-4">
-															<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" required>
+															<input type="email" name="payPalBusinessAccount" id="payPalBusinessAccount" class="form-control" value="<?= $payPalBusinessAccount ?>" required>
 														</div>
 
 														<label class="col-sm-2 control-label">Contact Nombor<span style="color:red">*</span></label>
 														<div class="col-sm-4">
-															<input type="number" name="contactNo" id="contactNo" class="form-control" required>
+															<input type="number" name="contactNo" id="contactNo" class="form-control" value="<?= $contactNo ?>" required>
 														</div>
 													</div>
 
@@ -317,26 +401,27 @@
 														<div class="col-sm-4">
 															Image 1
 															<span style="color:red">*</span>
-															<input type="file" name="img1" required>
+															<!-- <input type="file" name="img1" value="<?= $Vimage1 ?>" required> -->
+															<input type="file" name="img1" value="<?= $Vimage1 ?>">
 														</div>
 														<div class="col-sm-4">
 															Image 2
-															<input type="file" name="img2">
+															<input type="file" value="<?= $Vimage2 ?>" name="img2">
 														</div>
 														<div class="col-sm-4">
 															Image 3
-															<input type="file" name="img3">
+															<input type="file" value="<?= $Vimage3 ?>" name="img3">
 														</div>
 													</div>
 													<!-- row 3( upload image ) -->
 													<div class="form-group">
 														<div class="col-sm-4">
 															Image 4
-															<input type="file" name="img4">
+															<input type="file" value="<?= $Vimage4 ?>" name="img4">
 														</div>
 														<div class="col-sm-4">
 															Image 5
-															<input type="file" name="img5">
+															<input type="file" value="<?= $Vimage5 ?>" name="img5">
 														</div>
 													</div>
 
@@ -359,20 +444,47 @@
 												<div class="form-group">
 													<div class="col-sm-4">
 														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="sell" name="sell" value="1">
-														<label for="sell">sell</label>
+															<?php
+																if($sell == 1){
+															?>
+																<input type="checkbox" id="sell" name="sell" value="1" checked>
+															<?php
+																}else{
+															?>
+																<input type="checkbox" id="sell" name="sell" value="1">
+															<?php } ?>
+
+															<label for="sell">sell</label>
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="rent" name="rent" value="1">
-														<label for="rent">rent</label>
+															<?php
+																if($sell == 1){
+															?>
+																<input type="checkbox" id="rent" name="rent" value="1" checked>
+															<?php
+																}else{
+															?>
+																<input type="checkbox" id="rent" name="rent" value="1">
+															<?php } ?>
+															
+															<label for="rent">rent</label>
 														</div>
 													</div>
 													<div class="col-sm-4">
 														<div class="checkbox checkbox-inline">
-														<input type="checkbox" id="swap" name="swap" value="1">
-														<label for="swap">swap</label>
+															<?php
+																if($sell == 1){
+															?>
+																<input type="checkbox" id="swap" name="swap" value="1" checked>
+															<?php
+																}else{
+															?>
+																<input type="checkbox" id="swap" name="swap" value="1">
+															<?php } ?>
+															
+															<label for="swap">swap</label>
 														</div>
 													</div>
 

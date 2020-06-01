@@ -1,5 +1,3 @@
-item-details.php
-
 <!-- Booking Form -->
 <?php 
   session_start();

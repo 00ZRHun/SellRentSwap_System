@@ -243,48 +243,7 @@
                   </li>
                 <?php 
                   }
-                ?>
-
-
-              <!-- RENT -->
-              <?php 
-                }else if($result->rent == 1){ 
-              ?>
-                  <li role="presentation" class="col-md-4 active">
-                    <a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">
-                      Rent
-                    </a>
-                  </li>
-                  
-                  <!-- Swap -->
-                  <?php 
-                    if($result->swap == 1){ 
-                  ?>
-                    <li role="presentation" class="col-md-4">
-                      <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                        Swap
-                      </a>
-                    </li>
-                  <?php 
-                    }
-                  ?>
-
-
-              <!-- SWAP -->
-              <?php 
-                }else if($result->swap == 1){ 
-              ?>
-                <li role="presentation" class="col-md-4">
-                  <a href="#swap" aria-controls="swap" role="tab" data-toggle="tab">
-                    Swap
-                  </a>
-                </li>
-              <?php
-                }
-              ?>
-              
-
-
+                ?>             
 
             </ul>
             
@@ -336,200 +295,11 @@
                     </div>
                     <!--  -->
                   </p>
-                </div>
-
-                <!-- Rent -->
-                <?php 
-                  if($result->rent == 1){ 
-                ?>
-                  <div role="tabpanel" class="tab-pane" id="rent">
-                    <p>
-                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                    </p>
-                    <!--  -->
-                    <!-- payment( PayPal ) -->
-                    <div id="payment-box">
-                            <!-- <img src="images/camera.jpg" /> -->
-                            <h4 class="txt-title">
-                              Product Name : 
-                              <?php echo htmlentities($name);?>
-                            </h4>
-                            <div class="txt-price">
-                              Price Per Day : 
-                              RM<?php echo htmlentities($result->pricePerDay);?>
-                            </div>
-                            
-                            <!--  -->
-                            <!--  -->
-                            <!--  -->
-                            <div>
-                              <form name="form" action="" method="get">
-                                  <!-- <input type="text" name="subject" id="subject" value="Car Loan"> -->
-                                  <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                                  <input type='number' name='rentDay' value='0'>
-                                  <button type="submit">Check Price</button> -->
-                              </form>
-
-                              <!-- <?php echo $_GET['rentDay']; ?> -->
-                              <!-- <input type='number' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'> -->
-
-                            </div>
-                            <!--  -->
-                              <br>
-                              <!--  -->
-                             
-                            <!--  -->
-                            <form name="form" action="" method="get">
-                              <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-
-                              <input type='number' class='rentDay' name='rentDay' placeholder="0" /> Day(s)
-                              <br>
-                              <!-- RM<input type='number' id='totalPrice' name='totalPrice' placeholder="0.00" disabled /> -->
-                              <!-- <input type='text' id='totalPrice' name='totalPrice' value="<?= $totalPrice ?>" disabled />
-                              <input type='text' id='totalPrice' name='totalPrice' value="<?= $id ?>" disabled /> -->
-                              <button id="primaryButton" type="submit"  onclick="alert('abc')">Check Price</button>
-                            </form>
-
-
-                            <!--  -->
-                            <!--  -->
-
-
-                            <?php
-                              $pricePerDay = $result->pricePerDay;
-                              /* $totalPrice = $_COOKIE[sum];
-
-                              echo $totalPrice; */
-                            ?>
-                            <!--  -->
-
-                            
-
-                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr"
-                                method="post" target="_top">
-                                <!-- <input type='hidden' name='vhid' value='<?= $_GET['vhid']; ?>'> 
-                                <input type='number' name='rentDay' value='0'> -->
-
-                                <input type='hidden' name='business' value='<?php echo htmlentities($result->payPalBusinessAccount);?>'> 
-                                <input type='hidden' name='item_name' value='<?php echo htmlentities($name);?>'>
-                                <input type='hidden' name='item_number' value='<?php echo htmlentities($name . '#N1');?>'> 
-                                <input type='hidden' name='amount' value='<?php echo htmlentities((float)($result->pricePerDay) * (float)($_GET['rentDay']));?>'>
-                                <!-- <input type='hidden' name='amount' value='<?php echo htmlentities((float)($_GET['totalPrice']));?>'> -->
-                                <input type='hidden' name='no_shipping' value='1'> 
-                                <input type='hidden' name='currency_code' value='MYR'> 
-                                <input type='hidden' name='notify_url'
-                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/notify.php'>
-                                <input type='hidden' name='cancel_return'
-                                    value='http://localhost:8888/paypal-payment-gateway-integration-in-php/cancel.php'>
-                                <input type='hidden' name='return'
-                                    value='http://localhost:8888/Renting%20System/SellRentSwap_System/return.php'>
-                                <input type="hidden" name="cmd" value="_xclick">
-
-                                <!-- <button
-                                    type="submit" name="pay_now" id="pay_now"
-                                    Value="Rent"
-                                >
-                                  Rent
-                                <button> -->
-
-                                <!-- <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
-                                <button onclick="document.getElementById('primaryButton').click()" type="submit" name="pay_now" id="pay_now">Rent</button>
-                                <!-- <button>Rent</button> -->
-
-                            </form>
-                              <!--  -->
-                              <!-- <button onclick="alert('abc')">Go to Google</button></a>
-    <button>Rent</button> -->
-                    <!-- <button id="primaryButton" onclick="alert('abc')">Go to Google</button></a>
-                    <button onclick="document.getElementById('primaryButton').click()">Rent</button> -->
-
-                    </div>
-
-                    <!--  -->
-
-                    <!--  -->
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js "></script>
-                            <script>
-                              // we used jQuery 'keyup' to trigger the computation as the user type
-                              $('.rentDay').keyup(function () {
-                              
-                                  // initialize the sum (total price) to zero
-                                  var sum = 0;
-                                  
-                                  // we use jQuery each() to loop through all the textbox with 'price' class
-                                  // and compute the sum for each loop
-                                  $('.rentDay').each(function() {
-                                      sum += (Number($(this).val()) * <?= $pricePerDay ?>);
-                                  });
-                                  
-                                  // <?= $totalPrice ?> = sum;
-                                  // set the computed value to 'totalPrice' textbox
-                                  $('#totalPrice').val(sum);
-                                  
-                                  document.cookie = "sum";
-                              });
-
-                              <?php
-                                $totalPrice = $_COOKIE['sum'];
-
-                                echo $totalPrice;
-                              ?>
-                            </script>
-                    <!--  -->
-                    
-                  </div>
-                <?php 
-                  }
-                ?>
-
-              <!-- Swap -->
-              <div role="tabpanel" class="tab-pane" id="swap">                
-                <p>         
-                  <?php
-                  $user_sql = "SELECT id, FullName FROM tblusers WHERE EmailId=:email";        
-                  $user_query = $dbh->prepare($user_sql);
-                  $user_query->bindParam(':email', $email, PDO::PARAM_STR);
-                  $user_query->execute();
-                  $user_results = $user_query->fetch();
-
-                  $user_id = $user_results["id"];
-                  
-                  $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
-                          FROM tblpostitem as item 
-                          JOIN tblusers as user
-                          ON item.user_id = user.id
-                          WHERE user_id = :user_id";
-                    
-                    $query = $dbh->prepare($self_items_sql);
-                    $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                    $query->execute();
-                    $results = $query->fetchAll(PDO::FETCH_OBJ);                      
-                    ?>
-
-
-
-                    <h2>Item you have:<?= $user_results["id"]; ?></h2>
-                    <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
-                    <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
-                    <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
-                    <select name="receiver_item_id" id="receiver_item_id">
-                      <?php
-                      foreach ($results as $result) {                      
-                      ?>
-                        <option style="background: #346BE0; color: white; padding: 2em; border-radius: 15px;" value="<?php echo htmlentities($result->itemID) ?>"><?php echo htmlentities($result->productName) ?></option>
-                      <?php
-                      }
-                      ?>
-                    </select>                    
-                  <button id="swap-with-owner-btn">Swap with owner</button>
-                </p>
-              </div>
-              <!--  -->
-
+                </div>                
 
               <!-- RENT -->
               <?php 
-                }else if($result->rent == 1){ 
+                } if($result->rent == 1){ 
               ?>
                 <div role="tabpanel" class="tab-pane active" id="rent">
                   <p>
@@ -608,36 +378,55 @@
                   <!--  -->
                 </div>
                 
-                <!-- Swap -->
-                <?php 
-                  if($result->swap == 1){ 
-                ?>
-                  <div role="tabpanel" class="tab-pane" id="swap">
-                    <p>
-                      Swap
-                      <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                    </p>
-                  </div>
-                <?php 
-                  }
-                ?>
-              <!-- SWAP -->
               <?php 
-                }else if($result->swap == 1){ 
+                } if($result->swap == 1){ 
               ?>
-                <div role="tabpanel" class="tab-pane  active" id="swap">
-                  <p>
-                    Swap
-                    <!-- <?php echo htmlentities($result->VehiclesOverview);?> -->
-                  </p>
-                </div>
+                <div role="tabpanel" class="tab-pane" id="swap">                
+                <p>         
+                  <?php
+                  $user_sql = "SELECT id FROM tblusers WHERE EmailId=:email";        
+                  $user_query = $dbh->prepare($user_sql);
+                  $user_query->bindParam(':email', $email, PDO::PARAM_STR);
+                  $user_query->execute();
+                  $user_results = $user_query->fetch();
+
+                  $user_id = $user_results["id"];
+
+                  $item_status = 1;
+                  
+                  $self_items_sql = "SELECT item.id as itemID, item.user_id, item.swap, item.productName, user.id
+                          FROM tblpostitem as item 
+                          JOIN tblusers as user
+                          ON item.user_id = user.id
+                          WHERE user_id = :user_id AND item.delmode = :item_status";
+                    
+                    $query = $dbh->prepare($self_items_sql);
+                    $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                    $query->bindParam(':item_status', $item_status);
+                    
+                    $query->execute();
+                    $results = $query->fetchAll(PDO::FETCH_OBJ);                      
+                    ?>
+                    <h2>Item you have:</h2>
+                    <input type="hidden" name="item_id" id="item_id" value="<?php echo $_GET['vhid'] ?>">
+                    <input type="hidden" name="receiver_id" id="receiver_id" value="<?php echo htmlentities($user_id);?>">
+                    <input type="hidden" name="provider_id" id="provider_id" value="<?php echo htmlentities($providerID);?>">
+                    
+                    <select name="receiver_item_id" id="receiver_item_id">
+                      <?php
+                      foreach ($results as $result) {                      
+                      ?>
+                        <option style="background: #346BE0; color: white; padding: 2em; border-radius: 15px;" value="<?php echo htmlentities($result->itemID) ?>"><?php echo htmlentities($result->productName) ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>                    
+                  <button id="swap-with-owner-btn">Swap with owner</button>
+                </p>
+              </div>
               <?php
                 }
               ?>
-                  
-              
-
-
 
 
               <!--  -->

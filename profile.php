@@ -1,36 +1,39 @@
 <?php
-session_start();
-error_reporting(0);
-include 'includes/config.php';
-if (strlen($_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
-    if (isset($_POST['updateprofile'])) {
-        $name = $_POST['fullname'];
-        $mobileno = $_POST['mobilenumber'];
-        $dob = $_POST['dob'];
-        $adress = $_POST['address'];
-        $city = $_POST['city'];
-        $country = $_POST['country'];
-        $email = $_SESSION['login'];
-        $sql =
-            "update tblusers
-        set FullName=:name,ContactNo=:mobileno,dob=:dob,Address=:adress,City=:city,Country=:country
-        where EmailId=:email";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':name', $name, PDO::PARAM_STR);
-        $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
-        $query->bindParam(':dob', $dob, PDO::PARAM_STR);
-        $query->bindParam(':adress', $adress, PDO::PARAM_STR);
-        $query->bindParam(':city', $city, PDO::PARAM_STR);
-        $query->bindParam(':country', $country, PDO::PARAM_STR);
-        $query->bindParam(':email', $email, PDO::PARAM_STR);
-        $query->execute();
-        // $msg="Profile Updated Successfully".$sql.$name.$mobileno.$dob;
-        $msg = "Profile Updated Successfully";
-    }
+  session_start();
+  error_reporting(0);
+  include 'includes/config.php';
 
-    ?>
+  if (strlen($_SESSION['login'])==0)
+  {
+      header('location:index.php');
+  }
+  else {
+      if (isset($_POST['updateprofile'])) {
+          $name = $_POST['fullname'];
+          $mobileno = $_POST['mobilenumber'];
+          $dob = $_POST['dob'];
+          $adress = $_POST['address'];
+          $city = $_POST['city'];
+          $country = $_POST['country'];
+          $email = $_SESSION['login'];
+          $sql =
+              "update tblusers
+              set FullName=:name,ContactNo=:mobileno,dob=:dob,Address=:adress,City=:city,Country=:country
+              where EmailId=:email";
+          $query = $dbh->prepare($sql);
+          $query->bindParam(':name', $name, PDO::PARAM_STR);
+          $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
+          $query->bindParam(':dob', $dob, PDO::PARAM_STR);
+          $query->bindParam(':adress', $adress, PDO::PARAM_STR);
+          $query->bindParam(':city', $city, PDO::PARAM_STR);
+          $query->bindParam(':country', $country, PDO::PARAM_STR);
+          $query->bindParam(':email', $email, PDO::PARAM_STR);
+          $query->execute();
+          // $msg="Profile Updated Successfully".$sql.$name.$mobileno.$dob;
+          $msg = "Profile Updated Successfully";
+      }
+?>
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -67,7 +70,9 @@ if (strlen($_SESSION['login']) == 0) {
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+
   <style>
       .errorWrap {
         padding: 10px;
@@ -90,12 +95,11 @@ if (strlen($_SESSION['login']) == 0) {
 <body>
 
 <!-- Start Switcher -->
-<?php include 'includes/colorswitcher.php';?>
+<?php include('includes/colorswitcher.php');?>
 <!-- /Switcher -->
 
 <!--Header-->
-<?php include 'includes/header.php';?>
-<!-- /Header -->
+<?php include('includes/header.php');?>
 
 <!--Page Header-->
 <section class="page-header profile_page">
@@ -113,19 +117,20 @@ if (strlen($_SESSION['login']) == 0) {
   <!-- Dark Overlay-->
   <div class="dark-overlay"></div>
 </section>
-<!-- /Page Header-->
 
-<?php
-$useremail = $_SESSION['login'];
-    $sql = "SELECT * from tblusers where EmailId=:useremail";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-    $cnt = 1;
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            ?>
+<?php 
+  $useremail=$_SESSION['login'];
+  $sql = "SELECT * from tblusers where EmailId=:useremail";
+  $query = $dbh -> prepare($sql);
+  $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
+  $query->execute();
+  $results=$query->fetchAll(PDO::FETCH_OBJ);
+  $cnt=1;
+  if($query->rowCount() > 0)
+  {
+    foreach($results as $result)
+    { 
+?>
 
 <section class="user_profile inner_pages">
   <div class="container">
@@ -135,11 +140,11 @@ $useremail = $_SESSION['login'];
       </div>
 
       <div class="dealer_info">
-        <h5><?php echo htmlentities($result->FullName); ?></h5>
+        <h5><?php echo htmlentities($result->FullName);?></h5>
         <p>
-          <?php echo htmlentities($result->Address); ?><br>
-          <?php echo htmlentities($result->City); ?>&nbsp;
-          <?php echo htmlentities($result->Country); ?>
+          <?php echo htmlentities($result->Address);?><br>
+          <?php echo htmlentities($result->City);?>&nbsp;
+          <?php echo htmlentities($result->Country);?>
         </p>
       </div>
     </div>
@@ -208,8 +213,8 @@ if ($msg) {?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentit
 <!--/Profile-setting-->
 
 <!--Footer -->
-<?php include 'includes/footer.php';?>
-<!-- /Footer-->
+<?php include('includes/footer.php');?>
+<!-- /Footer--> 
 
 <!--Back to top-->
 <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>

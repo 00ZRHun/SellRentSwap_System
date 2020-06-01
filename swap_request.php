@@ -42,6 +42,7 @@
     <link rel = 'apple-touch-icon-precomposed' href = 'assets/images/favicon-icon/apple-touch-icon-57-precomposed.png'>
     <link rel = 'shortcut icon' href = 'assets/images/favicon-icon/favicon.png'>
     <link href = 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel = 'stylesheet'>
+
 </head>
 <body>
 
@@ -126,42 +127,46 @@
     }
     ?>
 </section>
-<!-- /Content -->
+<!-- /Content -->    
 
-<!--Footer -->
-<?php include( 'includes/footer.php' ); ?>
-<!-- /Footer-->
+    <!--Footer -->
+    <?php include('includes/footer.php');
+    ?>
+    <!-- /Footer-->
 
-<!--Back to top-->
-<div id = 'back-top' class = 'back-top'>
-    <a href = '#top'>
-     <i class = 'fa fa-angle-up' aria-hidden = 'true'></i>
-    </a>
-</div>
-<!--/Back to top-->
+    <!--Back to top-->
+    <div id='back-top' class='back-top'>
+        <a href='#top'>
+            <i class='fa fa-angle-up' aria-hidden='true'></i>
+        </a>
+    </div>
+    <!--/Back to top-->
 
-<!--Login-Form -->
-<?php include( 'includes/login.php' ); ?>
-<!--/Login-Form -->
+    <!--Login-Form -->
+    <?php include('includes/login.php');
+    ?>
+    <!--/Login-Form -->
 
-<!--Register-Form -->
-<?php include( 'includes/registration.php' ); ?>
-<!--/Register-Form -->
+    <!--Register-Form -->
+    <?php include('includes/registration.php');
+    ?>
+    <!--/Register-Form -->
 
-<!--Forgot-password-Form -->
-<?php include( 'includes/forgotpassword.php' ); ?>
+    <!--Forgot-password-Form -->
+    <?php include('includes/forgotpassword.php');
+    ?>
 
-<script src = 'assets/js/jquery.min.js'></script>
+    <script src='assets/js/jquery.min.js'></script>
 
-<!-- Logics -->
-<script src = 'js/swap/swap.js'></script>
+    <!-- Logics -->
+    <script src='js/swap/swap.js'></script>
 
-<script src = 'assets/js/bootstrap.min.js'></script>
-<script src = 'assets/js/interface.js'></script>
-<script src = 'assets/switcher/js/switcher.js'></script>
-<script src = 'assets/js/bootstrap-slider.min.js'></script>
-<script src = 'assets/js/slick.min.js'></script>
-<script src = 'assets/js/owl.carousel.min.js'></script>
+    <script src='assets/js/bootstrap.min.js'></script>
+    <script src='assets/js/interface.js'></script>
+    <script src='assets/switcher/js/switcher.js'></script>
+    <script src='assets/js/bootstrap-slider.min.js'></script>
+    <script src='assets/js/slick.min.js'></script>
+    <script src='assets/js/owl.carousel.min.js'></script>
 
 </body>
 
